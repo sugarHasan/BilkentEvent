@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "335104120022",
+    "firebase_url": "https://bilkent-event.firebaseio.com",
+    "project_id": "bilkent-event",
+    "storage_bucket": "bilkent-event.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335104120022:android:3f2cddd0d4338fcc",
+        "android_client_info": {
+          "package_name": "com.example.bilkentevent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335104120022-b9clbui8ug8fbi0l23lecqrak1o0he4a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bilkentevent",
+            "certificate_hash": "673f40e7ad165f301d64a7ee217da82cedaa60e5"
+          }
+        },
+        {
+          "client_id": "335104120022-8a3n32a50uovp3441bv1f2ahou13svot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzBKfHVTi9zKQyhYJzO8liZlH8nmydYJY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "335104120022-8a3n32a50uovp3441bv1f2ahou13svot.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
