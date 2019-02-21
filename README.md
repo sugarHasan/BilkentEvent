@@ -1,3 +1,3 @@
 # BilkentEvent
 
-Arkadaslar bu su ilk sectigimiz uygulamanin kodu istediginiz isinize yariycak bisey olursa diye koydum bunu
+Arkadaslar su ana kadar ben user olusturma ve authenticate etme kismi ile ugrastim projeyi yine de degisiklik yapmadan once kopyalayin da geriye donmek nolur nolmaz daha rahat olsun. Iyi calismalar
