@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.example.bilkentevent">
-
+    
     <dist:module dist:instant="true" />
+
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".ClubRegisterActivity"></activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".AdminChecker" />
+        <activity android:name=".AddEventActivity" />
+        <activity android:name=".EventsListActivity" />
+        <activity android:name=".ClubLoginActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginRegisterActivity">

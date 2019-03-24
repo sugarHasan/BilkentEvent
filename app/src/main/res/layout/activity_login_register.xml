@@ -10,14 +10,14 @@
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="178dp"
         android:layout_marginTop="73dp"
         android:layout_marginEnd="145dp"
         android:layout_marginBottom="9dp"
         android:text="Login"
         app:layout_constraintBottom_toTopOf="@+id/register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/register"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -34,4 +34,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login"
         app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/clubLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="184dp"
+        android:layout_marginTop="323dp"
+        android:layout_marginEnd="139dp"
+        android:layout_marginBottom="182dp"
+        android:text="Admin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register" />
+
+    <Button
+        android:id="@+id/clubRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="183dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginEnd="92dp"
+        android:layout_marginBottom="65dp"
+        android:text="Admin Register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clubLogin" />
 </androidx.constraintlayout.widget.ConstraintLayout>

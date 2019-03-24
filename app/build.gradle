@@ -31,6 +31,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-database:16.0.6'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
+    implementation 'com.google.firebase:firebase-storage:16.1.0'
+
+
+    implementation 'com.lorentzos.swipecards:library:1.0.9'
+    //The library that used for swipe cards...implementation
+    implementation 'com.android.support:cardview-v7:28.0.0-alphal'
 
 }
 
