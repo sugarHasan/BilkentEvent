@@ -11,22 +11,42 @@ public class EventBox {
     //constants
 
     //variables
-    ArrayList <Event> box;
-
+    private ArrayList <Event> box;
+    private int size;
     //methods
-
+    public void removeTopEvent(){
+        box.remove(0);
+        size--;
+    }
+    public Event returnsEvent(){
+        Event temp = box.get(0);
+        return temp;
+    }
     public EventBox() {
         box = new ArrayList<Event>();
+        size=0;
     }
 
     public boolean addEvent(Event addingEvent){
-        if(box.add(addingEvent))
+        if(box.add(addingEvent)) {
+            size++;
             return true;
+        }
         return false;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     public boolean removeEvent(Event removingEvent){
         if(box.remove(removingEvent))
+            return true;
+        return false;
+    }
+
+    public boolean containsEvent(Event searchEvent){
+        if(box.contains(searchEvent))
             return true;
         return false;
     }

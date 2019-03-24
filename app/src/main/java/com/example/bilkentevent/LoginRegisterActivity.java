@@ -9,16 +9,18 @@ import android.widget.Button;
 
 public class LoginRegisterActivity extends AppCompatActivity {
 
-    private Button bRegister, bLogin;
+    private Button bRegister, logina, bClubLogin ,bClubRegister;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
 
-        bLogin = (Button) findViewById(R.id.login);
+        logina = (Button) findViewById(R.id.login);
         bRegister = (Button) findViewById(R.id.register);
+        bClubLogin = (Button) findViewById(R.id.clubLogin);
+        bClubRegister = (Button) findViewById(R.id.clubRegister);
 
-        bLogin.setOnClickListener(new View.OnClickListener(){
+        logina.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view)  {
                 Intent intent = new Intent (LoginRegisterActivity.this , LoginActivity.class);
                 startActivity(intent);
@@ -30,6 +32,22 @@ public class LoginRegisterActivity extends AppCompatActivity {
         bRegister.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view)  {
                 Intent intent = new Intent (LoginRegisterActivity.this , RegisterActivity.class);
+                startActivity(intent);
+                finish();
+                return;
+            }
+        });
+        bClubLogin.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view)  {
+                Intent intent = new Intent (LoginRegisterActivity.this , AdminChecker.class);
+                startActivity(intent);
+                finish();
+                return;
+            }
+        });
+        bClubRegister.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view)  {
+                Intent intent = new Intent (LoginRegisterActivity.this , AdminChecker.class);
                 startActivity(intent);
                 finish();
                 return;

@@ -8,6 +8,7 @@ package com.example.bilkentevent;
 public class Date {
     //constants
 
+
     //variables
     private int day;
     private int month;
