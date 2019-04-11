@@ -20,10 +20,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,13 +39,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private ArrayList<Object> allClubs;
+    private ArrayList<Cards> temp;
 
     private int i;
     private Button bProfile , bLogout;
 
     private FirebaseAuth mAuth;
     private DatabaseReference userDb;
+
+
     private String currentUid;
 
 
@@ -49,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
 
         userDb = FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth = FirebaseAuth.getInstance();
@@ -58,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         getEvents();
-
 
 
         arrayAdapter = new arrayAdapter(this, R.layout.item,rowItems);
@@ -81,18 +89,20 @@ public class MainActivity extends AppCompatActivity {
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
                 Cards obj = (Cards) dataObject;
-                String userId = obj.getUserID();
-                userDb.child("Person").child(currentUid).child("Connections").child("Pass").child(userId).setValue(true);
-                userDb.child("Club").child(userId).child("Connections").child("Pass").child(currentUid).setValue(true);
+                String clubId = obj.getUserID();
+                String eventId = obj.getEventID();
+                userDb.child("Person").child(currentUid).child("Connections").child(clubId).child("Pass").child(eventId).setValue(true);
+                userDb.child("Clubs").child(clubId).child("Events").child(eventId).child("Connections").child("Pass").child(currentUid).setValue(true);
                 Toast.makeText(MainActivity.this , "Maybe, next time?",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
                 Cards obj = (Cards) dataObject;
-                String userId = obj.getUserID();
-                userDb.child("Person").child(currentUid).child("Connections").child("Attend").child(userId).setValue(true);
-                userDb.child("Club").child(userId).child("Connections").child("Attend").child(currentUid).setValue(true);
+                String clubId = obj.getUserID();
+                String eventId = obj.getEventID();
+                userDb.child("Person").child(currentUid).child("Connections").child(clubId).child("Attend").child(eventId).setValue(true);
+                userDb.child("Clubs").child(clubId).child("Events").child(eventId).child("Connections").child("Attend").child(currentUid).setValue(true);
                 Toast.makeText(MainActivity.this , "See you there!!",Toast.LENGTH_SHORT).show();
             }
 
@@ -113,8 +123,14 @@ public class MainActivity extends AppCompatActivity {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-
                 Toast.makeText(MainActivity.this , "Clicked",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent (MainActivity.this , EventActivity.class);
+                intent.putExtra("Event", (Serializable) dataObject);
+                startActivity(intent);
+                finish();
+                return;
+
+
             }
         });
 
@@ -140,26 +156,44 @@ public class MainActivity extends AppCompatActivity {
 
     public void getEvents(){
 
-        DatabaseReference getter = FirebaseDatabase.getInstance().getReference().child("Users").child("Club");
+        final DatabaseReference getter = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs");
         getter.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if(dataSnapshot.exists() && !dataSnapshot.child("Connections").child("Pass").hasChild(currentUid) && !dataSnapshot.child("Connections").child("Attend").hasChild(currentUid) ){
-                    HashMap<String, Object> datas = (HashMap<String, Object>) dataSnapshot.child("profile").getValue();
-                    if(datas==null)
-                        return;
-                    String name = (String)datas.get("Club Name");
-                    String id = (String)datas.get("Event Email");
-                    String day = (String)datas.get("Day");
-                    String month = (String)datas.get("Month");
-                    String year = (String)datas.get("Year");
-                    String topic = (String)datas.get("Topic");
-                    String location = (String)datas.get("Location");
+                if (dataSnapshot.exists()) {
+                    final String clubId = dataSnapshot.getKey();
 
 
-                    Cards item1 = new Cards(name, dataSnapshot.getKey());
-                    rowItems.add(item1);
-                    arrayAdapter.notifyDataSetChanged();
+                    for (DataSnapshot childSnapshot : dataSnapshot.child("Events").getChildren()) {
+                        if(childSnapshot.exists() && !childSnapshot.child("Connections").child("Pass").hasChild(currentUid) && !childSnapshot.child("Connections").child("Attend").hasChild(currentUid))    {
+                            HashMap<String, Object> datas = (HashMap<String, Object>) childSnapshot.child("Profile").getValue();
+                            if(datas==null)
+                                return;
+                            String name = (String)datas.get("Club Name");
+                            String id = (String)datas.get("Event Email");
+                            String day = (String)datas.get("Day");
+                            String month = (String)datas.get("Month");
+                            String year = (String)datas.get("Year");
+                            String topic = (String)datas.get("Topic");
+                            String location = (String)datas.get("Location");
+
+                            if(isPast(day,month,year)==false){
+                                DatabaseReference r = childSnapshot.getRef();
+                                r.child("Profile").child("Passed").setValue(true);
+                            }
+                            else {
+                                ClubEvent temp = new ClubEvent(new Date(10, 11, 2019), new Time(16, 00), new Time(18, 00), clubId, childSnapshot.getKey(), childSnapshot.child("Connections").child("Attend").getChildrenCount());
+                                Cards item1 = new Cards(name, clubId, childSnapshot.getKey());
+                                rowItems.add(item1);
+                                arrayAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                    }
+
+
+
+
                 }
             }
 
@@ -185,6 +219,37 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private boolean isPast(String day, String month, String year) {
+        int iDay = Integer.parseInt(day);
+        int iMonth = Integer.parseInt(month);
+        int iYear = Integer.parseInt(year);
+
+        int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        int currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+
+        if(currentYear > iYear)
+            return false;
+        else if(currentYear == iYear)   {
+            if(currentMonth > iMonth)   {
+                return false;
+            }
+            else if(currentMonth == iMonth) {
+                if(currentDay>iDay) {
+                    return false;
+                }
+                else if(currentDay<= iDay)
+                    return true;
+            }
+            else
+                return true;
+
+        }
+        else
+            return true;
+        return true;
+    }
+
     public void logoutUser(View view){
         mAuth.signOut();
         Intent intent = new Intent(MainActivity.this , LoginRegisterActivity.class);
@@ -193,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
         return;
 
     }
+
 
 
 }
