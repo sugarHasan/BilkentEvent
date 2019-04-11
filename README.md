@@ -7,3 +7,7 @@ Arkadaslar su ana kadar ben user olusturma ve authenticate etme kismi ile ugrast
 --Patch 1--03.25.2019
 
 Patch biri paylastim. Suanda layoutlar ozensiz ancak firebase databaseindeki event olusturma ve event almak mevcut. Takvim kismina daha baslanmadi, profil kisminda ise az kaldi. Iyi calismalar. Update e branchden ulasabilirsiniz. Iyi calismalar.
+
+--Patch 2--04.11.2019
+
+Patch ikiyi paylastim. Uygulama artik calisiyor sadece cirkin ufak hatalar var. Calendar ve profil ise yok ve katilimcilari gozukmuyo daha. Ayrica uygulama rastgele yazildigi icin biraz yavas.
