@@ -24,9 +24,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ClubRegisterActivity extends AppCompatActivity {
-    public Person user;
+
     private Button bRegister;
-    private EditText etUsername, etPassword, etName, etDay, etMonth, etYear, etTopic, etLocation;
+    private EditText etUsername, etPassword, etName;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener fireBaseAuthStateListener;
 
@@ -54,11 +54,7 @@ public class ClubRegisterActivity extends AppCompatActivity {
         etUsername = (EditText) findViewById(R.id.email);
         etPassword = (EditText) findViewById(R.id.password);
 
-        etYear = (EditText) findViewById(R.id.year);
-        etDay = (EditText) findViewById(R.id.day);
-        etMonth = (EditText) findViewById(R.id.month);
-        etTopic = (EditText) findViewById(R.id.topic);
-        etLocation = (EditText) findViewById(R.id.location);
+
 
 
 
@@ -69,11 +65,7 @@ public class ClubRegisterActivity extends AppCompatActivity {
                 final String email = etUsername.getText().toString();
                 final String password = etPassword.getText().toString();
                 final String name = etName.getText().toString();
-                final String day = etDay.getText().toString();
-                final String month = etMonth.getText().toString();
-                final String year = etYear.getText().toString();
-                final String topic = etTopic.getText().toString();
-                final String location = etLocation.getText().toString();
+
 
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(ClubRegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -83,18 +75,11 @@ public class ClubRegisterActivity extends AppCompatActivity {
                         }
                         else {
                             String userId = mAuth.getCurrentUser().getUid();
-                            DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Club").child(name).child(userId).child("profile");
+                            DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs").child(userId).child("profile");
                             HashMap<String, Object> datas = new HashMap<String, Object>();
-
-                            //datas.put("Club Name" ,name);
-                            datas.put("Event password" , password);
-                            datas.put("Event Email" , email);
-                            datas.put("Topic" ,topic);
-                            datas.put("Location" , location);
-                            datas.put("Month" , month);
-                            datas.put("Day" ,day);
-                            datas.put("Year" , year);
-
+                            datas.put("Club Name" ,name);
+                            datas.put("Club password" , password);
+                            datas.put("Club Email" , name);
                             currentUserDb.setValue(datas);
                             Toast.makeText(ClubRegisterActivity.this, "Sign up is completed, you can login.", Toast.LENGTH_SHORT).show();
 

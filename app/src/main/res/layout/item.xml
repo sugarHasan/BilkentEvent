@@ -23,19 +23,21 @@
             android:layout_gravity="center"
             android:layout_width="250dp"
             android:layout_height="170dp">
-            
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/image" />
+
             <TextView
                 android:id="@+id/name"
-                android:textSize="40sp"
-                android:textColor="@android:color/white"
-                android:gravity="center"
-                tools:text="hello"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="40sp"
+                tools:text="hello" />
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/todo" />
 
 
         </FrameLayout>

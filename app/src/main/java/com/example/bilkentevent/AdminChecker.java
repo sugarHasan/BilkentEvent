@@ -41,7 +41,7 @@ public class AdminChecker extends AppCompatActivity {
                         return;
                     }
                     else {
-                        Intent intent = new Intent(AdminChecker.this, ClubRegisterActivity.class);
+                        Intent intent = new Intent(AdminChecker.this, ClubLoginActivity.class);
 
                         startActivity(intent);
                         finish();

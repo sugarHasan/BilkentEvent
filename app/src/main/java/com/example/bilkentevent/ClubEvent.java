@@ -11,52 +11,40 @@ public class ClubEvent extends Event {
     //constants
 
     //variables
-    private Club club;
-    private int gePoint;
-    private int popularity;
-    private ArrayList<Person> participants;
+    private String clubID;
+    private String eventID;
+    private long popularity;
 
     //methods
 
-    public ClubEvent(Date dayOfEvent, Time startTime, Time finishTime, Club club, int gePoint) {
+    public ClubEvent(Date dayOfEvent, Time startTime, Time finishTime, String clubID, String eventId,long popularity) {
         super( dayOfEvent, startTime, finishTime);
-        this.club = club;
-        this.gePoint = gePoint;
-        popularity = 0;
-        participants = new ArrayList<Person>();
+        this.clubID = clubID;
+        this.eventID = eventId;
+        this.popularity = popularity ;
     }
 
-    public Club getClub() {
-        return club;
+    public String getClubID() {
+        return clubID;
     }
 
-    public void setClub(Club club) {
-        this.club = club;
+    public void setClubID(String clubID) {
+        this.clubID = clubID;
     }
 
-    public int getGePoint() {
-        return gePoint;
+    public String getEventID() {
+        return eventID;
     }
 
-    public void setGePoint(int gePoint) {
-        this.gePoint = gePoint;
+    public void setEventID(String eventID) {
+        this.eventID = eventID;
     }
 
-    public boolean addParticipant(Person participant){
-        if(participants.add(participant)) {
-            popularity++;
-            return true;
-        }
-        return false;
+    public long getPopularity() {
+        return popularity;
     }
 
-    public boolean removeParticipant(Person participant){
-        if (participants.remove(participant)) {
-            popularity--;
-            return true;
-        }
-        return false;
+    public void setPopularity(long popularity) {
+        this.popularity = popularity;
     }
-
-
 }

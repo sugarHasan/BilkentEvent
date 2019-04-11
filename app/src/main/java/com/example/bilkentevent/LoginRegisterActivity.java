@@ -6,14 +6,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+
+import com.google.firebase.FirebaseApp;
+import com.squareup.picasso.Picasso;
 
 public class LoginRegisterActivity extends AppCompatActivity {
 
     private Button bRegister, logina, bClubLogin ,bClubRegister;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
+
+
 
         logina = (Button) findViewById(R.id.login);
         bRegister = (Button) findViewById(R.id.register);
@@ -39,7 +46,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
         });
         bClubLogin.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view)  {
-                Intent intent = new Intent (LoginRegisterActivity.this , AdminChecker.class);
+                Intent intent = new Intent (LoginRegisterActivity.this , AddEventActivity.class);
                 startActivity(intent);
                 finish();
                 return;
@@ -47,7 +54,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
         });
         bClubRegister.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view)  {
-                Intent intent = new Intent (LoginRegisterActivity.this , AdminChecker.class);
+                Intent intent = new Intent (LoginRegisterActivity.this , ClubRegisterActivity.class);
                 startActivity(intent);
                 finish();
                 return;
