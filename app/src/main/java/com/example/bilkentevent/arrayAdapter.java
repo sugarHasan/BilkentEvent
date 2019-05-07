@@ -32,15 +32,16 @@ import androidx.annotation.NonNull;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class arrayAdapter extends ArrayAdapter<Cards> {
+public class arrayAdapter extends ArrayAdapter<ClubEvent> {
 
     Context context;
-    public arrayAdapter(Context context , int resourceId , List<Cards>items){
+    public arrayAdapter(Context context , int resourceId , List<ClubEvent>items){
         super(context,resourceId,items);
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
-        Cards cardItem = getItem(position);
+
+        ClubEvent event = getItem(position);
 
         if(convertView==null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item , parent , false);
@@ -49,9 +50,9 @@ public class arrayAdapter extends ArrayAdapter<Cards> {
         TextView name = (TextView) convertView.findViewById(R.id.name);
         final ImageView image = (ImageView) convertView.findViewById(R.id.image);
 
-        name.setText(cardItem.getName());
+        name.setText(event.getTopic());
 
-        String getStorage = "images/"+cardItem.getEventID();
+        String getStorage = "images/"+event.getEventID();
 
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
@@ -67,8 +68,7 @@ public class arrayAdapter extends ArrayAdapter<Cards> {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
-                //System.out.println("error");
-                //Picasso.get().load("").into(image);
+                Picasso.get().load("https://media.wired.com/photos/5b17381815b2c744cb650b5f/master/w_1164,c_limit/GettyImages-134367495.jpg").into(image);
             }
         });
 

@@ -18,15 +18,13 @@ public class Person {
     private int gePoint;
     private ImageView profilePicture;
     private int characteristicId;
-    private EventBox liked;
-    private EventBox disliked;
+
     //methods
     Person(String mail, String password){
         this.name = name;
         this.password = password;
         gePoint = 0;
-        liked = new EventBox();
-        disliked = new EventBox();
+
     }
 
     public void setName(String name){
@@ -53,35 +51,11 @@ public class Person {
         return motto;
     }
 
-    public boolean likeEvent(Event addingEvent){
-        if(liked.addEvent(addingEvent))
-            return true;
-        return false;
-    }
 
-    public boolean dislikeEvent(Event dislikedEvent){
-        if(disliked.addEvent(dislikedEvent))
-            return true;
-        return false;
-    }
 
-    public boolean removeEvent(Event removingEvent){
-        if(liked.removeEvent(removingEvent))
-            return true;
-        return false;
-    }
 
-    public void increasPoint(int addPoint){
-        gePoint += addPoint;
-    }
 
-    public EventBox thatDayEvents(Date date){
-        EventBox result = new EventBox();
-        for(int i =0 ; i < liked.getSize();i++ ){
 
-        }
 
-        return result;
-    }
 
 }
