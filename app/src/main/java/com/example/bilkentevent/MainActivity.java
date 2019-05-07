@@ -26,28 +26,19 @@ import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Cards[] cardsData;
     private arrayAdapter arrayAdapter;
-    private ListView listView;
-    List<Cards> rowItems;
-
-
-
-    private ArrayList<Cards> temp;
-
-    private int i;
-    private Button bProfile , bLogout;
-
+    List<ClubEvent> rowItems;
+    private Button bProfile , bLogout, bCalendar;
     private FirebaseAuth mAuth;
     private DatabaseReference userDb;
-
-
     private String currentUid;
 
 
@@ -62,16 +53,69 @@ public class MainActivity extends AppCompatActivity {
         userDb = FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth = FirebaseAuth.getInstance();
         currentUid = mAuth.getCurrentUser().getUid();
+        rowItems = new ArrayList<ClubEvent>();
 
-        rowItems = new ArrayList<Cards>();
+            final DatabaseReference getter = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs");
+            getter.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    if (dataSnapshot.exists()) {
+                        final String clubId = dataSnapshot.getKey();
+                        for (DataSnapshot childSnapshot : dataSnapshot.child("Events").getChildren()) {
+                            if(childSnapshot.exists() && !childSnapshot.child("Connections").child("Pass").hasChild(currentUid) && !childSnapshot.child("Connections").child("Attend").hasChild(currentUid))    {
+                                HashMap<String, Object> datas = (HashMap<String, Object>) childSnapshot.child("Profile").getValue();
+                                if(datas==null)
+                                    return;
+                                String name = (String)datas.get("Club Name");
+                                String id = (String)datas.get("Event Email");
+                                String day = (String)datas.get("Day");
+                                String month = (String)datas.get("Month");
+                                String year = (String)datas.get("Year");
+                                String topic = (String)datas.get("Topic");
+                                String location = (String)datas.get("Location");
 
+                                if(isPast(day,month,year)==false){
+                                    DatabaseReference r = childSnapshot.getRef();
+                                    r.child("Profile").child("Passed").setValue(true);
+                                }
+                                else {
+                                    ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)),new Time(16, 00), new Time(18, 00),topic, clubId, childSnapshot.getKey(), location,(int)childSnapshot.child("Connections").child("Attend").getChildrenCount());
+                                    rowItems.add(temp);
+                                    arrayAdapter.notifyDataSetChanged();
+                                    System.out.println(temp.getEventID() + "     " + temp.getPopularity());
+                                }
+                            }
 
-        getEvents();
+                        }
+                        Collections.sort(rowItems);
+                    }
+                }
 
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
 
         arrayAdapter = new arrayAdapter(this, R.layout.item,rowItems);
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
+
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -88,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-                Cards obj = (Cards) dataObject;
-                String clubId = obj.getUserID();
+                ClubEvent obj = (ClubEvent) dataObject;
+                String clubId = obj.getClubID();
                 String eventId = obj.getEventID();
                 userDb.child("Person").child(currentUid).child("Connections").child(clubId).child("Pass").child(eventId).setValue(true);
                 userDb.child("Clubs").child(clubId).child("Events").child(eventId).child("Connections").child("Pass").child(currentUid).setValue(true);
@@ -98,17 +142,20 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Cards obj = (Cards) dataObject;
-                String clubId = obj.getUserID();
+                ClubEvent obj = (ClubEvent) dataObject;
+                String clubId = obj.getClubID();
                 String eventId = obj.getEventID();
                 userDb.child("Person").child(currentUid).child("Connections").child(clubId).child("Attend").child(eventId).setValue(true);
                 userDb.child("Clubs").child(clubId).child("Events").child(eventId).child("Connections").child("Attend").child(currentUid).setValue(true);
-                Toast.makeText(MainActivity.this , "See you there!!",Toast.LENGTH_SHORT).show();
+                System.out.println(obj.getEventID() + "     " + obj.getPopularity());
+                //Toast.makeText(MainActivity.this , "Popularity: " + obj.getPopularity(),Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // Ask for more data here
+
+                //arrayAdapter.notifyDataSetChanged();
 
             }
 
@@ -123,9 +170,11 @@ public class MainActivity extends AppCompatActivity {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
+                ClubEvent clubEvent = (ClubEvent)dataObject;
+                Cards card = new Cards(clubEvent.getClubID(),clubEvent.getEventID());
                 Toast.makeText(MainActivity.this , "Clicked",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent (MainActivity.this , EventActivity.class);
-                intent.putExtra("Event", (Serializable) dataObject);
+                intent.putExtra("Event", card);
                 startActivity(intent);
                 finish();
                 return;
@@ -152,72 +201,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    public void getEvents(){
-
-        final DatabaseReference getter = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs");
-        getter.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.exists()) {
-                    final String clubId = dataSnapshot.getKey();
-
-
-                    for (DataSnapshot childSnapshot : dataSnapshot.child("Events").getChildren()) {
-                        if(childSnapshot.exists() && !childSnapshot.child("Connections").child("Pass").hasChild(currentUid) && !childSnapshot.child("Connections").child("Attend").hasChild(currentUid))    {
-                            HashMap<String, Object> datas = (HashMap<String, Object>) childSnapshot.child("Profile").getValue();
-                            if(datas==null)
-                                return;
-                            String name = (String)datas.get("Club Name");
-                            String id = (String)datas.get("Event Email");
-                            String day = (String)datas.get("Day");
-                            String month = (String)datas.get("Month");
-                            String year = (String)datas.get("Year");
-                            String topic = (String)datas.get("Topic");
-                            String location = (String)datas.get("Location");
-
-                            if(isPast(day,month,year)==false){
-                                DatabaseReference r = childSnapshot.getRef();
-                                r.child("Profile").child("Passed").setValue(true);
-                            }
-                            else {
-                                ClubEvent temp = new ClubEvent(new Date(10, 11, 2019), new Time(16, 00), new Time(18, 00), clubId, childSnapshot.getKey(), childSnapshot.child("Connections").child("Attend").getChildrenCount());
-                                Cards item1 = new Cards(name, clubId, childSnapshot.getKey());
-                                rowItems.add(item1);
-                                arrayAdapter.notifyDataSetChanged();
-                            }
-                        }
-
-                    }
-
-
-
-
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+        bCalendar = (Button) findViewById(R.id.calendar);
+        bCalendar.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view)  {
+                Intent intent = new Intent (MainActivity.this , CalendarActivity.class);
+                startActivity(intent);
+                finish();
+                return;
             }
         });
+
     }
+
+
 
     private boolean isPast(String day, String month, String year) {
         int iDay = Integer.parseInt(day);

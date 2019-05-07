@@ -6,12 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +29,11 @@ import java.util.HashMap;
 public class EventActivity extends AppCompatActivity {
 
     private TextView name, location;
+    private Button addEvent;
     private ImageView image;
+    private FirebaseAuth mAuth;
+    private DatabaseReference userDb;
+    private String currentUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +42,13 @@ public class EventActivity extends AppCompatActivity {
 
 
         Intent i = getIntent();
-        Cards temp = (Cards)i.getSerializableExtra("Event");
+        final Cards temp = (Cards)i.getSerializableExtra("Event");
 
 
         name = (TextView) findViewById(R.id.eventName);
         location = (TextView) findViewById(R.id.eventLocation);
 
-        final DatabaseReference getter = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs").child(temp.getUserID()).child("Events").child(temp.getEventID());
+        final DatabaseReference getter = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs").child(temp.getClubID()).child("Events").child(temp.getEventID());
 
 
         getter.child("Profile").addValueEventListener(new ValueEventListener() {
@@ -66,7 +73,7 @@ public class EventActivity extends AppCompatActivity {
         });
 
 
-
+        addEvent = (Button) findViewById(R.id.addEvent);
         image = (ImageView) findViewById(R.id.eventImage);
 
 
@@ -87,10 +94,20 @@ public class EventActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
                 //System.out.println("error");
-                //Picasso.get().load("").into(image);
+                Picasso.get().load("https://media.wired.com/photos/5b17381815b2c744cb650b5f/master/w_1164,c_limit/GettyImages-134367495.jpg").into(image);
             }
         });
 
+
+        addEvent.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view)  {
+                userDb = FirebaseDatabase.getInstance().getReference().child("Users");
+                mAuth = FirebaseAuth.getInstance();
+                currentUid = mAuth.getCurrentUser().getUid();
+                userDb.child("Person").child(currentUid).child("Connections").child(temp.getClubID()).child("Attend").child(temp.getEventID()).setValue(true);
+                userDb.child("Clubs").child(temp.getClubID()).child("Events").child(temp.getEventID()).child("Connections").child("Attend").child(currentUid).setValue(true);
+            }
+        });
 
 
 

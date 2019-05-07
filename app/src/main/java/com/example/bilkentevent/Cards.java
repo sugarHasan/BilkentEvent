@@ -3,29 +3,23 @@ package com.example.bilkentevent;
 import java.io.Serializable;
 
 public class Cards implements Serializable {
-    private String name;
-    private String userID;
+
+    private String clubID;
     private String eventID;
-    public Cards(String name ,String userID, String eventID){
-        this.name = name;
-        this.userID = userID;
+
+    public Cards(String clubID, String eventID){
+
+        this.clubID = clubID;
         this.eventID = eventID;
     }
 
-    public String getName() {
-        return name;
+
+    public String getClubID() {
+        return clubID;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setClubID(String userID) {
+        this.clubID = userID;
     }
 
     public String getEventID() {
@@ -35,5 +29,6 @@ public class Cards implements Serializable {
     public void setEventID(String eventID) {
         this.eventID = eventID;
     }
+
 }
 

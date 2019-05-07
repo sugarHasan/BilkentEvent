@@ -73,16 +73,9 @@ public class RegisterActivity extends AppCompatActivity {
                             DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Person").child(userId).child("profile");
                             HashMap<String,Object> datas = new HashMap<String,Object>();
 
-
-                            Date d = new Date(12,32,1232);
-                            Time t = new Time(1 , 12);
-                            Time tt = new Time(3, 32);
-                            Event e = new Event(d,t,tt );
-
                             datas.put("Name" ,name);
                             datas.put("Password" , password);
                             datas.put("Email" , email);
-
 
                             currentUserDb.setValue(datas);
                             Toast.makeText(RegisterActivity.this, "Sign up is completed, you can login.", Toast.LENGTH_SHORT).show();

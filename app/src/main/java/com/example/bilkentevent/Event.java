@@ -5,25 +5,26 @@ Created by Hasan Yildirim
  */
 package com.example.bilkentevent;
 
-public class Event {
+import java.io.Serializable;
+
+public class Event{
 
     protected Date dayOfEvent;
     protected Time startTime;
     protected Time finishTime;
     protected boolean isOver;
     protected boolean active;
-    private String deneme = "Event class";
+    private String topic ;
 
-    public String getDeneme() {
-        return deneme;
-    }
 
-    public Event(Date dayOfEvent, Time startTime, Time finishTime) {
+
+    public Event(Date dayOfEvent, Time startTime, Time finishTime, String topic) {
         this.dayOfEvent = dayOfEvent;
         this.startTime = startTime;
         this.finishTime = finishTime;
         isOver = false;
         active = true;
+        this.topic = topic;
     }
 
     public Date getDayOfEvent() {
@@ -64,5 +65,13 @@ public class Event {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 }

@@ -5,23 +5,34 @@ Created by Hasan Yildirim
  */
 package com.example.bilkentevent;
 
-import java.util.ArrayList;
 
-public class ClubEvent extends Event {
+import java.io.Serializable;
+
+public class ClubEvent extends Event implements Comparable<Object>{
     //constants
 
     //variables
+    private String location;
     private String clubID;
     private String eventID;
-    private long popularity;
+    private int popularity;
 
     //methods
 
-    public ClubEvent(Date dayOfEvent, Time startTime, Time finishTime, String clubID, String eventId,long popularity) {
-        super( dayOfEvent, startTime, finishTime);
+    public ClubEvent(Date dayOfEvent, Time startTime, Time finishTime,String topic, String clubID, String eventId,String location, int popularity) {
+        super( dayOfEvent, startTime, finishTime,topic);
         this.clubID = clubID;
         this.eventID = eventId;
         this.popularity = popularity ;
+        this.location = location;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getClubID() {
@@ -40,11 +51,17 @@ public class ClubEvent extends Event {
         this.eventID = eventID;
     }
 
-    public long getPopularity() {
+    public int getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(long popularity) {
+    public void setPopularity(int popularity) {
         this.popularity = popularity;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        ClubEvent f = (ClubEvent) o;
+        return f.popularity - this.popularity ;
     }
 }
