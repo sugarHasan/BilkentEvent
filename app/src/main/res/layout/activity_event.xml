@@ -8,28 +8,18 @@
 
     <ImageView
         android:id="@+id/eventImage"
-        android:layout_width="121dp"
-        android:layout_height="109dp"
-        android:layout_marginStart="141dp"
-        android:layout_marginTop="83dp"
-        android:layout_marginEnd="149dp"
-        android:layout_marginBottom="539dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="411dp"
+        android:layout_height="240dp"
+        app:layout_constraintBottom_toTopOf="@+id/eventName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@android:drawable/ic_media_pause" />
 
     <TextView
         android:id="@+id/eventName"
-        android:layout_width="221dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="141dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="49dp"
-        android:layout_marginBottom="35dp"
+        android:layout_width="410dp"
+        android:layout_height="64dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/eventLocation"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,14 +28,10 @@
 
     <TextView
         android:id="@+id/eventLocation"
-        android:layout_width="217dp"
+        android:layout_width="415dp"
         android:layout_height="55dp"
-        android:layout_marginStart="141dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="53dp"
-        android:layout_marginBottom="302dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/addEvent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eventName" />
@@ -54,13 +40,23 @@
         android:id="@+id/addEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="269dp"
-        android:layout_marginTop="81dp"
-        android:layout_marginEnd="54dp"
-        android:layout_marginBottom="155dp"
+        android:layout_marginStart="323dp"
+        android:layout_marginBottom="324dp"
         android:text="Button"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eventLocation" />
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="405dp"
+        android:layout_height="308dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addEvent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

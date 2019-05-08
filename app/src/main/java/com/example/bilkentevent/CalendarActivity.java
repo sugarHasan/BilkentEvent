@@ -3,16 +3,22 @@ package com.example.bilkentevent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -37,10 +43,10 @@ public class CalendarActivity extends AppCompatActivity{
     int thismonth;
     int thisyear;
 
+    private eventAdapter adapter;
 
 
     EventBox box;
-    EventBox thatDayBox;
     private FirebaseAuth mAuth;
     private DatabaseReference userDb;
 
@@ -49,18 +55,22 @@ public class CalendarActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
         myCalender = findViewById(R.id.calender);
-        text = findViewById(R.id.textView8);
         mybutton = (Button) findViewById(R.id.button3);
         //final Intent i =new Intent(this ,Main2Activity.class);
         final Intent i = new Intent(CalendarActivity.this,AddPersonalEvent.class);
+        final ArrayList<Event> list = new ArrayList<Event>();
         box = new EventBox();
-        thatDayBox = new EventBox();
         getEvents();
-
+        adapter = new eventAdapter(CalendarActivity.this, R.layout.listevent,list);
+        final ListView  listView =  (ListView)findViewById(R.id.listView1);
         myCalender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth)
             {
+                if(adapter.isEmpty() == false)
+                    adapter.clear();
+                if(list.isEmpty() == false)
+                    list.clear();
                 date = new Date(dayOfMonth,month+1,year);
                 i.putExtra("day",dayOfMonth);
                 i.putExtra("month",month);
@@ -68,15 +78,13 @@ public class CalendarActivity extends AppCompatActivity{
                 for(int i = 0 ; i < box.getSize() ; i++){
                     Event checker = box.getEvent(i);
                     Date eventDay = checker.getDayOfEvent();
-                    System.out.println(eventDay.getDay() + " " + eventDay.getMonth() + " " + eventDay.getYear());
                     if(eventDay.getDay()==dayOfMonth && eventDay.getMonth()==(month+1) && eventDay.getYear()==year) {
-                        thatDayBox.addEvent(checker);
+                        list.add(checker);
                     }
                 }
-                if(thatDayBox.getSize()!=0) {
-                    Event e = thatDayBox.getEvent(0);
-                    if(e!=null)
-                        text.setText(e.getTopic());
+                if(list.isEmpty() == false) {
+                    adapter = new eventAdapter(CalendarActivity.this, R.layout.listevent,list);
+                    listView.setAdapter(adapter);
                 }
             }
         });
@@ -88,6 +96,25 @@ public class CalendarActivity extends AppCompatActivity{
                 startActivity(intent);
                 finish();
                 return;
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Event e = list.get(position);
+                ClubEvent c = new ClubEvent(new Date(0, 0, 0),new Time(0, 0), new Time(0, 0)," ", " ", " ", " ",0);
+                if(e.getClass().equals(c.getClass())){
+                    ClubEvent clubEvent = (ClubEvent)e;
+
+                    Cards card = new Cards(clubEvent.getClubID(), clubEvent.getEventID());
+                    Intent intent = new Intent(CalendarActivity.this, EventActivity.class);
+                    intent.putExtra("Event", card);
+                    startActivity(intent);
+                    finish();
+                    return;
+                }
             }
         });
     }
@@ -167,7 +194,7 @@ public class CalendarActivity extends AppCompatActivity{
 
                         if(childSnapshot.exists()) {
 
-                            String eventID = childSnapshot.getKey();
+                            final String eventID = childSnapshot.getKey();
                             DatabaseReference event = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs").child(clubID).child("Events").child(eventID);
                             event.child("Profile").addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -175,7 +202,7 @@ public class CalendarActivity extends AppCompatActivity{
                                     HashMap<String, Object> datas = (HashMap<String, Object>) snapshot.getValue();
                                     if (datas == null)
                                         return;
-                                    System.out.println(snapshot.toString());
+                                    //System.out.println(snapshot.toString());
                                     String name = (String) datas.get("Club Name");
                                     String id = (String) datas.get("Event Email");
                                     String day = (String) datas.get("Day");
@@ -184,11 +211,13 @@ public class CalendarActivity extends AppCompatActivity{
                                     String topic = (String) datas.get("Topic");
                                     String location = (String) datas.get("Location");
 
+
+
                                     if (isPast(day, month, year) == false) {
                                         DatabaseReference r = snapshot.getRef();
                                         r.child("Profile").child("Passed").setValue(true);
                                     }
-                                        ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), new Time(16, 00), new Time(18, 00), topic, clubID, snapshot.getKey(), location,(int) snapshot.child("Connections").child("Attend").getChildrenCount());
+                                        ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), new Time(16, 00), new Time(18, 00), topic, clubID, eventID, location,(int) snapshot.child("Connections").child("Attend").getChildrenCount());
                                         box.addEvent(temp);
 
 
