@@ -11,3 +11,7 @@ Patch biri paylastim. Suanda layoutlar ozensiz ancak firebase databaseindeki eve
 --Patch 2--04.11.2019
 
 Patch ikiyi paylastim. Uygulama artik calisiyor sadece cirkin ufak hatalar var. Calendar ve profil ise yok ve katilimcilari gozukmuyo daha. Ayrica uygulama rastgele yazildigi icin biraz yavas.
+
+--Patch 3 Code Upload 1--
+
+Patch ucte genel olarak calismasi da takvimin duzeltildi.
