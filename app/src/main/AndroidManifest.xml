@@ -14,8 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CalendarActivity"></activity>
-        <activity android:name=".AddPersonalEvent"></activity>
+        <activity android:name=".PersonActivity"></activity>
+        <activity android:name=".CalendarActivity" />
+        <activity android:name=".AddPersonalEvent" />
         <activity android:name=".EventActivity" />
         <activity android:name=".ClubRegisterActivity" />
         <activity android:name=".ProfileActivity" />
@@ -24,9 +25,8 @@
         <activity android:name=".EventsListActivity" />
         <activity android:name=".ClubLoginActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginRegisterActivity">
+        <activity android:name=".LoginActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

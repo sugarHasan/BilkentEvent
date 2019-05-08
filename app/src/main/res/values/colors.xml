@@ -3,4 +3,20 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="black">#D0CFCF</color>
+    <color name="grey">#AAAAAA</color>
+    <color name="darkpurple">#301A57</color>
+    <color name="lightpurple">#7C51CA</color>
+    <color name="lightestpurple">#A490C9</color>
+    <color name="alivepurple">#7310CC</color>
+    <color name="alivepurplelight">#AE70E6</color>
+    <color name="alivepurplelightest">#D7C5EB</color>
+    <color name="blue">#3B43E0</color>
+    <color name="lightblue">#1E8BDF</color>
+    <color name="lightbluepuple">#9F54F3</color>
+    <color name="lightestblue">#1DB4DA</color>
+    <color name="whiteblue">#B4DCE7</color>
+    <color name="transblue">#003B43E0</color>
+
+
 </resources>

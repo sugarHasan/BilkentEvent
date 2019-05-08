@@ -7,8 +7,12 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +28,11 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername, etPassword;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener fireBaseAuthStateListener;
+    private Button signUp;
+    private Button eventOrganizer;
+    private TextView passwordForgot;
+    private RelativeLayout welcomeSign,userInfo;
+    private Animation upToDown,downToUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +52,18 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        bLogin = (Button) findViewById(R.id.login);
+        bLogin = (Button) findViewById(R.id.loginButton);
         etUsername = (EditText)findViewById(R.id.email);
         etPassword = (EditText)findViewById(R.id.password);
+        signUp = findViewById(R.id.signUpButton);
+        eventOrganizer = findViewById(R.id.eventOrganizerButton);
+        passwordForgot = findViewById(R.id.passwordForgotText);
+        welcomeSign = (RelativeLayout)findViewById(R.id.welcomeSignLayout);
+        userInfo = (RelativeLayout)findViewById(R.id.userInfoLayout);
+        upToDown = AnimationUtils.loadAnimation(this,R.anim.uptodown);
+        downToUp =  AnimationUtils.loadAnimation(this,R.anim.downtoup);
+        welcomeSign.setAnimation(upToDown);
+        userInfo.setAnimation(downToUp);
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +80,32 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
+        passwordForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,ForgotPasswordActivity.class));
+                finish();
+            }
+        });
+
+        signUp.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view)  {
+                Intent intent = new Intent (LoginActivity.this , RegisterActivity.class);
+                startActivity(intent);
+                finish();
+                return;
+            }
+        });
+        eventOrganizer.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view)  {
+                Intent intent = new Intent (LoginActivity.this , AddEventActivity.class);
+                startActivity(intent);
+                finish();
+                return;
+            }
+        });
+
+
     }
 
     @Override

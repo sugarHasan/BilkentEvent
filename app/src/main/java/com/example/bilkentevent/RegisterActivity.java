@@ -70,12 +70,11 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                         else {
                             String userId = mAuth.getCurrentUser().getUid();
-                            DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Person").child(userId).child("profile");
+                            DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Person").child(userId).child("Profile");
                             HashMap<String,Object> datas = new HashMap<String,Object>();
 
                             datas.put("Name" ,name);
-                            datas.put("Password" , password);
-                            datas.put("Email" , email);
+
 
                             currentUserDb.setValue(datas);
                             Toast.makeText(RegisterActivity.this, "Sign up is completed, you can login.", Toast.LENGTH_SHORT).show();

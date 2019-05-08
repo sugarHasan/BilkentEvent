@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
                                     ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)),new Time(16, 00), new Time(18, 00),topic, clubId, childSnapshot.getKey(), location,(int)childSnapshot.child("Connections").child("Attend").getChildrenCount());
                                     rowItems.add(temp);
                                     arrayAdapter.notifyDataSetChanged();
-                                    System.out.println(temp.getEventID() + "     " + temp.getPopularity());
                                 }
                             }
 
@@ -147,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
                 String eventId = obj.getEventID();
                 userDb.child("Person").child(currentUid).child("Connections").child(clubId).child("Attend").child(eventId).setValue(true);
                 userDb.child("Clubs").child(clubId).child("Events").child(eventId).child("Connections").child("Attend").child(currentUid).setValue(true);
-                System.out.println(obj.getEventID() + "     " + obj.getPopularity());
-                //Toast.makeText(MainActivity.this , "Popularity: " + obj.getPopularity(),Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(MainActivity.this , "See you there!!",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -248,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void logoutUser(View view){
         mAuth.signOut();
-        Intent intent = new Intent(MainActivity.this , LoginRegisterActivity.class);
+        Intent intent = new Intent(MainActivity.this , LoginActivity.class);
         startActivity(intent);
         finish();
         return;

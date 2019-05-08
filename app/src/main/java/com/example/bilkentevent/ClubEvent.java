@@ -27,6 +27,7 @@ public class ClubEvent extends Event implements Comparable<Object>{
         this.location = location;
     }
 
+
     public String getLocation() {
         return location;
     }
