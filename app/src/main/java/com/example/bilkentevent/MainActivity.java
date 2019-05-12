@@ -174,11 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this , "Clicked",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent (MainActivity.this , EventActivity.class);
                 intent.putExtra("Event", card);
-                startActivity(intent);
-                finish();
-                return;
-
-
+                startActivity(intent);;
             }
         });
 
@@ -188,8 +184,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view)  {
                 Intent intent = new Intent (MainActivity.this , ProfileActivity.class);
                 startActivity(intent);
-                finish();
-                return;
             }
         });
 
@@ -205,8 +199,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view)  {
                 Intent intent = new Intent (MainActivity.this , CalendarActivity.class);
                 startActivity(intent);
-                finish();
-                return;
             }
         });
 
@@ -249,8 +241,6 @@ public class MainActivity extends AppCompatActivity {
         mAuth.signOut();
         Intent intent = new Intent(MainActivity.this , LoginActivity.class);
         startActivity(intent);
-        finish();
-        return;
 
     }
 

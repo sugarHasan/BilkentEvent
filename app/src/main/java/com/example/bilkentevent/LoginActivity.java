@@ -22,6 +22,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * This is the first page user sees. He can 
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private Button bLogin;
@@ -47,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent (LoginActivity.this , MainActivity.class);
                     startActivity(intent);
                     finish();
-                    return;
                 }
             }
         };
@@ -55,15 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         bLogin = (Button) findViewById(R.id.loginButton);
         etUsername = (EditText)findViewById(R.id.email);
         etPassword = (EditText)findViewById(R.id.password);
-        signUp = findViewById(R.id.signUpButton);
-        eventOrganizer = findViewById(R.id.eventOrganizerButton);
-        passwordForgot = findViewById(R.id.passwordForgotText);
-        welcomeSign = (RelativeLayout)findViewById(R.id.welcomeSignLayout);
-        userInfo = (RelativeLayout)findViewById(R.id.userInfoLayout);
-        upToDown = AnimationUtils.loadAnimation(this,R.anim.uptodown);
-        downToUp =  AnimationUtils.loadAnimation(this,R.anim.downtoup);
-        welcomeSign.setAnimation(upToDown);
-        userInfo.setAnimation(downToUp);
+
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,11 +74,21 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
+
+        signUp = findViewById(R.id.signUpButton);
+        eventOrganizer = findViewById(R.id.eventOrganizerButton);
+        passwordForgot = findViewById(R.id.passwordForgotText);
+        welcomeSign = (RelativeLayout)findViewById(R.id.welcomeSignLayout);
+        userInfo = (RelativeLayout)findViewById(R.id.userInfoLayout);
+        upToDown = AnimationUtils.loadAnimation(this,R.anim.uptodown);
+        downToUp =  AnimationUtils.loadAnimation(this,R.anim.downtoup);
+        welcomeSign.setAnimation(upToDown);
+        userInfo.setAnimation(downToUp);
+
         passwordForgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this,ForgotPasswordActivity.class));
-                finish();
             }
         });
 
@@ -92,16 +96,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view)  {
                 Intent intent = new Intent (LoginActivity.this , RegisterActivity.class);
                 startActivity(intent);
-                finish();
-                return;
             }
         });
         eventOrganizer.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view)  {
-                Intent intent = new Intent (LoginActivity.this , AddEventActivity.class);
+                Intent intent = new Intent (LoginActivity.this , ClubLoginActivity.class);
                 startActivity(intent);
-                finish();
-                return;
             }
         });
 

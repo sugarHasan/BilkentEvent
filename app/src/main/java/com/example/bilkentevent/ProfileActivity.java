@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -37,7 +38,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private EditText mNameField, mPhoneField;
+    private EditText mNameField, mMottoField;
 
     private Button mBack, mConfirm;
 
@@ -46,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mUserDatabase;
 
-    private String userId, name, phone, profileImageUrl, userSex;
+    private String userId, name, motto;
 
     private Uri resultUri;
 
@@ -56,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         mNameField = (EditText) findViewById(R.id.name);
-        mPhoneField = (EditText) findViewById(R.id.phone);
+        mMottoField = (EditText) findViewById(R.id.motto);
 
         mProfileImage = (ImageView) findViewById(R.id.profileImage);
 
@@ -66,18 +67,11 @@ public class ProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
 
-        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
-
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child("Person").child(userId).child("Profile");
+    System.out.println(userId);
         getUserInfo();
 
-        mProfileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent, 1);
-            }
-        });
+
         mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,31 +92,17 @@ public class ProfileActivity extends AppCompatActivity {
         mUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
+                if(dataSnapshot.exists()){
                     Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                    if(map.get("name")!=null){
-                        name = map.get("name").toString();
+                    if(map.get("Name")!=null){
+                        name = map.get("Name").toString();
                         mNameField.setText(name);
                     }
-                    if(map.get("phone")!=null){
-                        phone = map.get("phone").toString();
-                        mPhoneField.setText(phone);
+                    if(map.get("Motto")!=null){
+                        motto = map.get("Motto").toString();
+                        mMottoField.setText(motto);
                     }
-                    if(map.get("sex")!=null){
-                        userSex = map.get("sex").toString();
-                    }
-                    //Glide.clear(mProfileImage);
-                    if(map.get("profileImageUrl")!=null){
-                        profileImageUrl = map.get("profileImageUrl").toString();
-                        switch(profileImageUrl){
-                            case "default":
-                                //Glide.with(getApplication()).load(R.mipmap.ic_launcher).into(mProfileImage);
-                                break;
-                            default:
-                               // Glide.with(getApplication()).load(profileImageUrl).into(mProfileImage);
-                                break;
-                        }
-                    }
+
                 }
             }
 
@@ -132,52 +112,39 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        String getStorage = "images/"+userId;
+
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+
+        storageRef.child(getStorage).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+                //System.out.println(uri.toString());
+                Picasso.get().load(uri.toString()).into(mProfileImage);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+                Picasso.get().load("https://media.wired.com/photos/5b17381815b2c744cb650b5f/master/w_1164,c_limit/GettyImages-134367495.jpg").into(mProfileImage);
+            }
+        });
+
     }
 
     private void saveUserInformation() {
         name = mNameField.getText().toString();
-        phone = mPhoneField.getText().toString();
+        motto = mMottoField.getText().toString();
 
-        Map userInfo = new HashMap();
-        userInfo.put("name", name);
-        userInfo.put("phone", phone);
-        mUserDatabase.updateChildren(userInfo);
-        if(resultUri != null){
-            StorageReference filepath = FirebaseStorage.getInstance().getReference().child("profileImages").child(userId);
-            Bitmap bitmap = null;
+        HashMap<String,Object> datas = new HashMap<String,Object>();
 
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getApplication().getContentResolver(), resultUri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        datas.put("Name" ,name);
+        datas.put("Motto" ,motto);
 
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
-            byte[] data = baos.toByteArray();
-            UploadTask uploadTask = filepath.putBytes(data);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    finish();
-                }
-            });
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    //Uri downloadUrl = taskSnapshot.getDownloadUrl();
+        mUserDatabase.setValue(datas);
 
-                    Map userInfo = new HashMap();
-                   // userInfo.put("profileImageUrl", downloadUrl.toString());
-                    mUserDatabase.updateChildren(userInfo);
-
-                    finish();
-                    return;
-                }
-            });
-        }else{
-            finish();
-        }
     }
 
     @Override

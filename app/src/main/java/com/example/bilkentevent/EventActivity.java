@@ -31,6 +31,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import android.view.KeyEvent;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -222,5 +223,7 @@ public class EventActivity extends AppCompatActivity {
         final ListView listView =  (ListView)findViewById(R.id.listview);
         adapter = new personAdapter(EventActivity.this, R.layout.listperson,list);
         listView.setAdapter(adapter);
+
+
     }
 }

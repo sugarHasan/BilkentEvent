@@ -7,60 +7,70 @@
     tools:context=".RegisterActivity">
 
     <EditText
+        android:id="@+id/motto"
+        android:layout_width="411dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Motto"
+        app:layout_constraintBottom_toTopOf="@+id/register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
         android:id="@+id/name"
-        android:layout_width="216dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="152dp"
-        android:layout_marginEnd="96dp"
-        android:layout_marginBottom="143dp"
-        android:text="User Name"
-        app:layout_constraintBottom_toTopOf="@+id/password"
+        android:layout_width="411dp"
+        android:layout_height="70dp"
+        android:hint="Name"
+        app:layout_constraintBottom_toTopOf="@+id/motto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.888" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <EditText
         android:id="@+id/email"
-        android:layout_width="216dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="152dp"
-        android:layout_marginEnd="96dp"
-        android:layout_marginBottom="143dp"
-        android:text="User mail"
+        android:layout_width="411dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="130dp"
+        android:hint="User mail"
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="226dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="143dp"
-        android:layout_marginEnd="86dp"
-        android:layout_marginBottom="312dp"
-        android:text="password"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="411dp"
+        android:layout_height="70dp"
+        android:hint="Password"
+        app:layout_constraintBottom_toTopOf="@+id/name"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <Button
         android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="162dp"
-        android:layout_marginTop="133dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="59dp"
+        android:layout_width="413dp"
+        android:layout_height="91dp"
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/motto" />
+
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="410dp"
+        android:layout_height="161dp"
+        app:layout_constraintBottom_toTopOf="@+id/email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ic_profile" />
 </androidx.constraintlayout.widget.ConstraintLayout>

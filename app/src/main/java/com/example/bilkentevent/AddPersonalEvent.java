@@ -132,7 +132,7 @@ public class AddPersonalEvent extends AppCompatActivity implements TimePickerDia
                 datas.put("Passed" , false);
                 userDb.setValue(datas);
                 startActivity(backToCalender);
-                finish();
+
             }
         });
         //send event
@@ -140,7 +140,7 @@ public class AddPersonalEvent extends AppCompatActivity implements TimePickerDia
             @Override
             public void onClick(View v) {
                 startActivity(backToCalender);
-                finish();
+
             }
         });
     }
