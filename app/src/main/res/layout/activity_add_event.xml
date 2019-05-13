@@ -78,12 +78,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
         android:text="addEvent"
-        app:layout_constraintBottom_toBottomOf="@+id/image"
+        app:layout_constraintBottom_toBottomOf="@+id/eventImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/image" />
+        app:layout_constraintTop_toTopOf="@+id/eventImage" />
 
     <ImageView
-        android:id="@+id/profilePicture"
+        android:id="@+id/eventImage"
         android:layout_width="166dp"
         android:layout_height="196dp"
         android:layout_marginStart="50dp"

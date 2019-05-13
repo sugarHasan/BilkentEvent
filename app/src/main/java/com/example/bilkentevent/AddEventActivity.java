@@ -92,7 +92,7 @@ public class AddEventActivity extends AppCompatActivity {
         etStartTime = (EditText) findViewById(R.id.startTime);
         etEndTime = (EditText) findViewById(R.id.endTime);
 
-        mImage = (ImageView) findViewById(R.id.image);
+        mImage = (ImageView) findViewById(R.id.eventImage);
 
         mImage.setOnClickListener(new View.OnClickListener() {
             @Override
