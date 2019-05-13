@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,15 +39,22 @@ public class MainActivity extends AppCompatActivity {
     private arrayAdapter arrayAdapter;
     List<ClubEvent> rowItems;
     private Button bProfile , bLogout, bCalendar;
+    private TextView evName, evDate;
     private FirebaseAuth mAuth;
     private DatabaseReference userDb;
     private String currentUid;
+    private String eventName, eventDate;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        evName = (TextView) findViewById(R.id.eveName);
+        evDate = (TextView) findViewById(R.id.eveDate);
+        eventName = "";
+        eventDate = "";
 
 
 
@@ -85,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
                                         ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), start, end, topic, clubId, childSnapshot.getKey(), location, (int) childSnapshot.child("Connections").child("Attend").getChildrenCount());
                                         rowItems.add(temp);
                                         arrayAdapter.notifyDataSetChanged();
+                                        evName.setText (topic);
+                                        evDate.setText (day + " " + dateConverter(month) + " " + year + "   " + start + " - " + end);
                                     }
                                 }
                             }
@@ -246,6 +257,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this , LoginActivity.class);
         startActivity(intent);
 
+    }
+
+    public static final String[] months = {"Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
+    public String dateConverter (String month) {
+        return months[Integer.parseInt(month) - 1];
     }
 
 

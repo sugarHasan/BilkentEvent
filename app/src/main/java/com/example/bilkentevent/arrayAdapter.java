@@ -30,11 +30,7 @@ public class arrayAdapter extends ArrayAdapter<ClubEvent> {
         if(convertView==null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item , parent , false);
         }
-
-        TextView name = (TextView) convertView.findViewById(R.id.name);
         final ImageView image1 = (ImageView) convertView.findViewById(R.id.eventImage);
-
-        name.setText(event.getTopic());
 
         String getStorage = "images/"+event.getEventID();
 

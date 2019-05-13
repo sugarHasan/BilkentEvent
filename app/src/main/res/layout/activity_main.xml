@@ -61,4 +61,33 @@
         app:layout_constraintTop_toTopOf="@+id/profile"
         app:layout_constraintVertical_bias="1.0" />
 
+    <TextView
+        android:id="@+id/eveName"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/frame" />
+
+    <TextView
+        android:id="@+id/eveDate"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="60dp"
+        android:text="Event Date"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/frame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eveName" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
