@@ -94,14 +94,22 @@ public class MainActivity extends AppCompatActivity {
                                         ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), start, end, topic, clubId, childSnapshot.getKey(), location, (int) childSnapshot.child("Connections").child("Attend").getChildrenCount());
                                         rowItems.add(temp);
                                         arrayAdapter.notifyDataSetChanged();
-                                        evName.setText (topic);
-                                        evDate.setText (day + " " + dateConverter(month) + " " + year + "   " + start + " - " + end);
+
                                     }
                                 }
                             }
 
                         }
                         Collections.sort(rowItems);
+                        if ( rowItems.size() >= 1 ) {
+                            ClubEvent obj = (ClubEvent) rowItems.get(0);
+                            evName.setText(obj.getTopic());
+                            evDate.setText(obj.getDayOfEvent().getDay() + " " + dateConverter(obj.getDayOfEvent().getMonth() + "") + " " + obj.getDayOfEvent().getYear() + "   " + obj.getStartTime() + " - " + obj.getFinishTime());
+                        }
+                        else {
+                            evName.setText("");
+                            evDate.setText("");
+                        }
                     }
                 }
 
@@ -139,6 +147,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("LIST", "removed object!");
                 rowItems.remove(0);
                 arrayAdapter.notifyDataSetChanged();
+                if ( rowItems.size() >= 1 ) {
+                    ClubEvent obj = (ClubEvent) rowItems.get(0);
+                    evName.setText(obj.getTopic());
+                    evDate.setText(obj.getDayOfEvent().getDay() + " " + dateConverter(obj.getDayOfEvent().getMonth() + "") + " " + obj.getDayOfEvent().getYear() + "   " + obj.getStartTime() + " - " + obj.getFinishTime());
+                }
+                else {
+                    evName.setText("There is no upcoming event.");
+                    evDate.setText("");
+                }
             }
 
             @Override
@@ -152,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
                 userDb.child("Person").child(currentUid).child("Connections").child(clubId).child("Pass").child(eventId).setValue(true);
                 userDb.child("Clubs").child(clubId).child("Events").child(eventId).child("Connections").child("Pass").child(currentUid).setValue(true);
                 Toast.makeText(MainActivity.this , "Maybe, next time?",Toast.LENGTH_SHORT).show();
+
+
             }
 
             @Override
