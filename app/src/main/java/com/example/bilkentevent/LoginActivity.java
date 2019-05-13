@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         });
         eventOrganizer.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view)  {
-                Intent intent = new Intent (LoginActivity.this , ClubRegisterActivity.class);
+                Intent intent = new Intent (LoginActivity.this , ClubLoginActivity.class);
                 startActivity(intent);
             }
         });

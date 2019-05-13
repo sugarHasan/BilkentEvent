@@ -73,15 +73,19 @@ public class MainActivity extends AppCompatActivity {
                                 String year = (String)datas.get("Year");
                                 String topic = (String)datas.get("Topic");
                                 String location = (String)datas.get("Location");
+                                boolean active =  (boolean)datas.get("Active");
+                                boolean past =  (boolean)datas.get("Passed");
 
-                                if(isPast(day,month,year)==false){
-                                    DatabaseReference r = childSnapshot.getRef();
-                                    r.child("Profile").child("Passed").setValue(true);
-                                }
-                                else {
-                                    ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)),new Time(16, 00), new Time(18, 00),topic, clubId, childSnapshot.getKey(), location,(int)childSnapshot.child("Connections").child("Attend").getChildrenCount());
-                                    rowItems.add(temp);
-                                    arrayAdapter.notifyDataSetChanged();
+                                if((active == true) && (past == false)) {
+
+                                    if (isPast(day, month, year) == false) {
+                                        DatabaseReference r = childSnapshot.getRef();
+                                        r.child("Profile").child("Passed").setValue(true);
+                                    } else {
+                                        ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), new Time(16, 00), new Time(18, 00), topic, clubId, childSnapshot.getKey(), location, (int) childSnapshot.child("Connections").child("Attend").getChildrenCount());
+                                        rowItems.add(temp);
+                                        arrayAdapter.notifyDataSetChanged();
+                                    }
                                 }
                             }
 
@@ -197,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         bCalendar = (Button) findViewById(R.id.calendar);
         bCalendar.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view)  {
-                Intent intent = new Intent (MainActivity.this , CalendarActivity.class);
+                Intent intent = new Intent (MainActivity.this , AddEventActivity.class);
                 startActivity(intent);
             }
         });

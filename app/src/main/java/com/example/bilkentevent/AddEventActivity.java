@@ -50,7 +50,7 @@ public class AddEventActivity extends AppCompatActivity {
 
     private StorageReference mStorageRef;
 
-    private EditText etYear,etDay,etMonth,etTopic,etLocation;
+    private EditText etYear,etDay,etMonth,etTopic,etLocation,etStartTime,etEndTime;
 
     private HashMap<String,Object> getValue;
     private String currentUid;
@@ -89,6 +89,8 @@ public class AddEventActivity extends AppCompatActivity {
         etMonth = (EditText) findViewById(R.id.month);
         etTopic = (EditText) findViewById(R.id.topic);
         etLocation = (EditText) findViewById(R.id.location);
+        etStartTime = (EditText) findViewById(R.id.startTime);
+        etEndTime = (EditText) findViewById(R.id.endTime);
 
         mImage = (ImageView) findViewById(R.id.image);
 
@@ -117,23 +119,25 @@ public class AddEventActivity extends AppCompatActivity {
                 final String day = etDay.getText().toString();
                 final String topic = etTopic.getText().toString();
                 final String location = etLocation.getText().toString();
+                final String startTime = etStartTime.getText().toString();
+                final String endTime = etEndTime.getText().toString();
                     HashMap<String, Object> datas = new HashMap<String, Object>();
                     datas.put("Topic" ,topic);
                     datas.put("Location" , location);
                     datas.put("Month" , month);
                     datas.put("Day" ,day);
                     datas.put("Year" , year);
-                    datas.put("StartHour" , "16");
-                    datas.put("EndHour", "18");
-                    datas.put("StartMinute" , "00");
-                    datas.put("EndMinute", "00");
+                    datas.put("Start Time" , startTime);
+                    datas.put("End Time", endTime);
                     datas.put("Passed" , false);
+                    datas.put("Active" , true);
 
                     ref.setValue(datas);
-
                     uploadImage(den);
+                    finish();
                 }
         });
+
 
 
 
@@ -173,23 +177,19 @@ public class AddEventActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(AddEventActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(AddEventActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+
                         }
                     });
         }

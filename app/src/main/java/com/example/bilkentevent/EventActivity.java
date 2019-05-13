@@ -73,7 +73,7 @@ public class EventActivity extends AppCompatActivity {
 
                         final String personID = dataSnapshot.getKey();
                         final DatabaseReference getPerson = FirebaseDatabase.getInstance().getReference().child("Users").child("Person").child(personID);
-                        getPerson.child("profile").addValueEventListener(new ValueEventListener() {
+                        getPerson.child("Profile").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot snapshot) {
                                 HashMap<String, Object> datas = (HashMap<String, Object>) snapshot.getValue();
@@ -116,10 +116,6 @@ public class EventActivity extends AppCompatActivity {
             }
 
         });
-
-
-
-
 
         final DatabaseReference getter = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs").child(temp.getClubID()).child("Events").child(temp.getEventID());
 

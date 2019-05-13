@@ -10,15 +10,15 @@ import java.io.Serializable;
 public class Event{
 
     protected Date dayOfEvent;
-    protected Time startTime;
-    protected Time finishTime;
+    protected String startTime;
+    protected String finishTime;
     protected boolean isOver;
     protected boolean active;
     private String topic ;
 
 
 
-    public Event(Date dayOfEvent, Time startTime, Time finishTime, String topic) {
+    public Event(Date dayOfEvent, String startTime, String finishTime, String topic) {
         this.dayOfEvent = dayOfEvent;
         this.startTime = startTime;
         this.finishTime = finishTime;
@@ -35,19 +35,19 @@ public class Event{
         this.dayOfEvent = dayOfEvent;
     }
 
-    public Time getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Time getFinishTime() {
+    public String getFinishTime() {
         return finishTime;
     }
 
-    public void setFinishTime(Time finishTime) {
+    public void setFinishTime(String finishTime) {
         this.finishTime = finishTime;
     }
 

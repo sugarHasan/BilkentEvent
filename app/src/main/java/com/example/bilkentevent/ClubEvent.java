@@ -19,7 +19,7 @@ public class ClubEvent extends Event implements Comparable<Object>{
 
     //methods
 
-    public ClubEvent(Date dayOfEvent, Time startTime, Time finishTime,String topic, String clubID, String eventId,String location, int popularity) {
+    public ClubEvent(Date dayOfEvent, String startTime, String finishTime,String topic, String clubID, String eventId,String location, int popularity) {
         super( dayOfEvent, startTime, finishTime,topic);
         this.clubID = clubID;
         this.eventID = eventId;
