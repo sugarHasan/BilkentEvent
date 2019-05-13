@@ -31,8 +31,8 @@ public class eventAdapter extends ArrayAdapter<Event> {
         TextView timeS = (TextView) convertView.findViewById(R.id.timeStart);
         TextView timeE = (TextView) convertView.findViewById(R.id.timeEnd);
         // Populate the data into the template view using the data object
-        topic.setText(e.getTopic());
-        timeS.setText(e.getStartTime() + "   |");
+        topic.setText(e.getTopic()+" | ");
+        timeS.setText(e.getStartTime() );
         timeE.setText(e.getFinishTime());
 
 
