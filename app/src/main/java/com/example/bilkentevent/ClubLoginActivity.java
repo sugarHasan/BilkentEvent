@@ -33,7 +33,7 @@ public class ClubLoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user!=null){
-                    Intent intent = new Intent (ClubLoginActivity.this , AddEventActivity.class);
+                    Intent intent = new Intent (ClubLoginActivity.this , ClubProfileActivity.class);
                     startActivity(intent);
                     finish();
                     return;

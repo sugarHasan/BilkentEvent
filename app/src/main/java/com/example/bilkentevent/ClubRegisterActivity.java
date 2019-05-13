@@ -4,21 +4,30 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +38,12 @@ public class ClubRegisterActivity extends AppCompatActivity {
     private EditText etUsername, etPassword, etName;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener fireBaseAuthStateListener;
+    private ImageView mImage;
+    private Uri filePath;
+    FirebaseStorage storage;
+    StorageReference storageReference;
+
+    private final int PICK_IMAGE_REQUEST = 71;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +69,20 @@ public class ClubRegisterActivity extends AppCompatActivity {
         etUsername = (EditText) findViewById(R.id.email);
         etPassword = (EditText) findViewById(R.id.password);
 
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
+        mImage = (ImageView) findViewById(R.id.image);
+
+        mImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+            }
+        });
 
 
 
@@ -75,11 +103,10 @@ public class ClubRegisterActivity extends AppCompatActivity {
                         }
                         else {
                             String userId = mAuth.getCurrentUser().getUid();
-                            DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs").child(userId).child("profile");
+                            DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs").child(userId).child("Profile");
                             HashMap<String, Object> datas = new HashMap<String, Object>();
                             datas.put("Club Name" ,name);
-                            datas.put("Club password" , password);
-                            datas.put("Club Email" , name);
+                            uploadImage(userId);
                             currentUserDb.setValue(datas);
                             Toast.makeText(ClubRegisterActivity.this, "Sign up is completed, you can login.", Toast.LENGTH_SHORT).show();
 
@@ -102,5 +129,40 @@ public class ClubRegisterActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         mAuth.removeAuthStateListener(fireBaseAuthStateListener);
+    }
+
+    private void uploadImage(String eventID) {
+
+        if(filePath != null)
+        {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            StorageReference ref = storageReference.child("images/"+ eventID);
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            Toast.makeText(ClubRegisterActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(ClubRegisterActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                        }
+                    });
+        }
     }
 }
