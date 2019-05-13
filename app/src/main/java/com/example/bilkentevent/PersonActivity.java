@@ -36,12 +36,12 @@ public class PersonActivity extends AppCompatActivity {
         final String personID = p.getPersonID();
 
 
-        image = (ImageView) findViewById(R.id.image);
+        image = (ImageView) findViewById(R.id.profilePicture);
         name = (TextView) findViewById(R.id.name);
         motto = (TextView) findViewById(R.id.motto);
 
         name.setText(p.getName());
-        motto.setText("Motto here");
+        motto.setText(p.getMotto());
         String getStorage = "images/"+personID;
 
 
