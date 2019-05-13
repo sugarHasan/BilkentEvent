@@ -204,8 +204,8 @@ public class CalendarActivity extends AppCompatActivity{
                                     if (datas == null)
                                         return;
                                     //System.out.println(snapshot.toString());
-                                    String name = (String) datas.get("Club Name");
-                                    String id = (String) datas.get("Event Email");
+                                    String start = (String) datas.get("Start Time");
+                                    String end = (String) datas.get("End Time");
                                     String day = (String) datas.get("Day");
                                     String month = (String) datas.get("Month");
                                     String year = (String) datas.get("Year");
@@ -218,7 +218,7 @@ public class CalendarActivity extends AppCompatActivity{
                                         DatabaseReference r = snapshot.getRef();
                                         r.child("Profile").child("Passed").setValue(true);
                                     }
-                                        ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), (new Time(16, 00)).toString(), (new Time(18, 00)).toString(), topic, clubID, eventID, location,(int) snapshot.child("Connections").child("Attend").getChildrenCount());
+                                        ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), start, end, topic, clubID, eventID, location,(int) snapshot.child("Connections").child("Attend").getChildrenCount());
                                         box.addEvent(temp);
 
 
