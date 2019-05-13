@@ -34,7 +34,7 @@
                 tools:text="hello" />
 
             <ImageView
-                android:id="@+id/image"
+                android:id="@+id/eventImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/todo" />

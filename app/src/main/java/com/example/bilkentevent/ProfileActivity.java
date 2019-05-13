@@ -143,6 +143,7 @@ public class ProfileActivity extends AppCompatActivity {
         datas.put("Name" ,name);
         datas.put("Motto" ,motto);
 
+
         mUserDatabase.setValue(datas);
 
     }

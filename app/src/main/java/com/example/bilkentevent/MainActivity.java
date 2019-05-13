@@ -66,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
                                 HashMap<String, Object> datas = (HashMap<String, Object>) childSnapshot.child("Profile").getValue();
                                 if(datas==null)
                                     return;
-                                String name = (String)datas.get("Club Name");
-                                String id = (String)datas.get("Event Email");
+                                String start = (String)datas.get("Start Time");
+                                String end = (String)datas.get("End Time");
                                 String day = (String)datas.get("Day");
                                 String month = (String)datas.get("Month");
                                 String year = (String)datas.get("Year");
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                                         DatabaseReference r = childSnapshot.getRef();
                                         r.child("Profile").child("Passed").setValue(true);
                                     } else {
-                                        ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), new Time(16, 00), new Time(18, 00), topic, clubId, childSnapshot.getKey(), location, (int) childSnapshot.child("Connections").child("Attend").getChildrenCount());
+                                        ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), start, end, topic, clubId, childSnapshot.getKey(), location, (int) childSnapshot.child("Connections").child("Attend").getChildrenCount());
                                         rowItems.add(temp);
                                         arrayAdapter.notifyDataSetChanged();
                                     }
@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         bCalendar = (Button) findViewById(R.id.calendar);
         bCalendar.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view)  {
-                Intent intent = new Intent (MainActivity.this , AddEventActivity.class);
+                Intent intent = new Intent (MainActivity.this , CalendarActivity.class);
                 startActivity(intent);
             }
         });

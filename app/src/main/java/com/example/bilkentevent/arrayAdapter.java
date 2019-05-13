@@ -32,7 +32,7 @@ public class arrayAdapter extends ArrayAdapter<ClubEvent> {
         }
 
         TextView name = (TextView) convertView.findViewById(R.id.name);
-        final ImageView image = (ImageView) convertView.findViewById(R.id.image);
+        final ImageView image1 = (ImageView) convertView.findViewById(R.id.eventImage);
 
         name.setText(event.getTopic());
 
@@ -46,13 +46,13 @@ public class arrayAdapter extends ArrayAdapter<ClubEvent> {
             public void onSuccess(Uri uri) {
                 // Got the download URL for 'users/me/profile.png'
                 //System.out.println(uri.toString());
-                Picasso.get().load(uri.toString()).into(image);
+                Picasso.get().load(uri.toString()).into(image1);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
-                Picasso.get().load("https://media.wired.com/photos/5b17381815b2c744cb650b5f/master/w_1164,c_limit/GettyImages-134367495.jpg").into(image);
+                Picasso.get().load("https://media.wired.com/photos/5b17381815b2c744cb650b5f/master/w_1164,c_limit/GettyImages-134367495.jpg").into(image1);
             }
         });
 

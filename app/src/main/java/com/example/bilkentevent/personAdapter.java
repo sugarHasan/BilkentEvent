@@ -38,8 +38,8 @@ public class personAdapter extends ArrayAdapter<Person> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.listperson, parent, false);
         }
 
-        String getStorage = "profileImages/"+e.getPersonID();
-        image = (ImageView) convertView.findViewById(R.id.image);
+        String getStorage = "images/"+e.getPersonID();
+        image = (ImageView) convertView.findViewById(R.id.profilePicture);
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
@@ -65,7 +65,7 @@ public class personAdapter extends ArrayAdapter<Person> {
 
         // Populate the data into the template view using the data object
         name.setText(e.getName());
-        motto.setText("Motto will be here..");
+        motto.setText(e.getMotto());
 
 
 

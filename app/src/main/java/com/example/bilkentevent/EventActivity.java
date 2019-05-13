@@ -35,7 +35,7 @@ import android.view.KeyEvent;
 
 public class EventActivity extends AppCompatActivity {
 
-    private TextView name, location;
+    private TextView name, location, date;
     private Button addEvent;
     private ImageView image;
     private FirebaseAuth mAuth;
@@ -58,6 +58,7 @@ public class EventActivity extends AppCompatActivity {
 
         name = (TextView) findViewById(R.id.eventName);
         location = (TextView) findViewById(R.id.eventLocation);
+        date = (TextView) findViewById(R.id.eventTime);
         participants = new ArrayList<String>();
         list = new ArrayList<Person>();
         adapter = new personAdapter(EventActivity.this, R.layout.listperson,list);
@@ -80,7 +81,9 @@ public class EventActivity extends AppCompatActivity {
                                 if(datas==null)
                                     return;
                                 String sName = (String)datas.get("Name");
+                                String sMotto = (String)datas.get("Motto");
                                 Person person = new Person(personID,sName);
+                                person.setMotto(sMotto);
                                 list.add(person);
                                 adapter.notifyDataSetChanged();
                             }
@@ -133,8 +136,11 @@ public class EventActivity extends AppCompatActivity {
                 String syear = (String)datas.get("Year");
                 String sTopic = (String)datas.get("Topic");
                 String sLocation = (String)datas.get("Location");
+                String sStart = (String)datas.get("Start Time");
+                String sEnd = (String)datas.get("End Time");
                 name.setText(sTopic);
                 location.setText(sLocation);
+                date.setText (sday + " " + dateConverter(smonth) + " " + syear + "   " + sStart + " - " + sEnd);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -222,4 +228,12 @@ public class EventActivity extends AppCompatActivity {
 
 
     }
+
+    public static final String[] months = {"Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
+    public String dateConverter (String month) {
+        return months[Integer.parseInt(month) - 1];
+    }
+
 }
+

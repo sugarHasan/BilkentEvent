@@ -23,6 +23,7 @@ public class Person implements Serializable {
     public Person(String personID, String name) {
         this.personID = personID;
         this.name = name;
+        this.motto = "My motto";
     }
 
     public String getPersonID() {
@@ -40,6 +41,10 @@ public class Person implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setMotto (String motto) { this.motto = motto; }
+
+    public String getMotto() { return motto; }
 
 
 }

@@ -33,4 +33,8 @@ public class Time {
     public void setMinute(int minute) {
         this.minute = minute;
     }
+
+    public String toString() {
+        return hour + ":" + minute + "";
+    }
 }

@@ -7,7 +7,7 @@
     android:padding="7dp">
 
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/profilePicture"
         android:layout_width="220dp"
         android:layout_height="83dp"
         android:contentDescription="@string/app_name"

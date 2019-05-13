@@ -105,7 +105,7 @@ public class CalendarActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Event e = list.get(position);
-                ClubEvent c = new ClubEvent(new Date(0, 0, 0),new Time(0, 0), new Time(0, 0)," ", " ", " ", " ",0);
+                ClubEvent c = new ClubEvent(new Date(0, 0, 0),(new Time(0, 0)).toString(), (new Time(0, 0)).toString()," ", " ", " ", " ",0);
                 if(e.getClass().equals(c.getClass())){
                     ClubEvent clubEvent = (ClubEvent)e;
 
@@ -218,7 +218,7 @@ public class CalendarActivity extends AppCompatActivity{
                                         DatabaseReference r = snapshot.getRef();
                                         r.child("Profile").child("Passed").setValue(true);
                                     }
-                                        ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), new Time(16, 00), new Time(18, 00), topic, clubID, eventID, location,(int) snapshot.child("Connections").child("Attend").getChildrenCount());
+                                        ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), (new Time(16, 00)).toString(), (new Time(18, 00)).toString(), topic, clubID, eventID, location,(int) snapshot.child("Connections").child("Attend").getChildrenCount());
                                         box.addEvent(temp);
 
 

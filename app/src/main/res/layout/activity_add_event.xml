@@ -83,7 +83,7 @@
         app:layout_constraintTop_toTopOf="@+id/image" />
 
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/profilePicture"
         android:layout_width="166dp"
         android:layout_height="196dp"
         android:layout_marginStart="50dp"
@@ -98,7 +98,7 @@
 
     <EditText
         android:id="@+id/startTime"
-        android:layout_width="125"
+        android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
         android:ems="10"
@@ -109,7 +109,7 @@
 
     <EditText
         android:id="@+id/endTime"
-        android:layout_width="125"
+        android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"

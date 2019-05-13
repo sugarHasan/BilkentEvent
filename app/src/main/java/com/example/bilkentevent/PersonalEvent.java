@@ -8,7 +8,7 @@ public class PersonalEvent extends Event {
     //methods
 
     public PersonalEvent(Date dayOfEvent, Time startTime, Time finishTime,String topic) {
-        super( dayOfEvent, startTime, finishTime,topic);
+        super( dayOfEvent, startTime.toString(), finishTime.toString(), topic);
     }
 
 
