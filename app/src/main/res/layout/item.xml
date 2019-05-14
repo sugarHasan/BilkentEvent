@@ -10,6 +10,7 @@
     android:paddingLeft="40sp"
     android:paddingEnd="20sp"
     android:paddingRight="40sp"
+    android:background="@color/transblue"
     android:paddingBottom="20sp">
 
     <androidx.cardview.widget.CardView

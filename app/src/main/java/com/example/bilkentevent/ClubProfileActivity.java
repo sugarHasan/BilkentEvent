@@ -140,7 +140,7 @@ public class ClubProfileActivity extends AppCompatActivity {
                     if(datas==null)
                         return;
                     String startTime = (String) datas.get("Start Time");
-                    String endTime = (String) datas.get("End TIme");
+                    String endTime = (String) datas.get("End Time");
                     String day = (String) datas.get("Day");
                     String month = (String) datas.get("Month");
                     String year = (String) datas.get("Year");
