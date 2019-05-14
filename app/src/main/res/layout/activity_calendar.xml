@@ -18,7 +18,10 @@
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:theme="@style/Calendar"
+        android:dateTextAppearance="@style/DateCalendar"
+        android:weekDayTextAppearance="@style/WeekCalendar">
 
     </CalendarView>
 
@@ -33,7 +36,9 @@
         android:layout_marginEnd="29dp"
         android:layout_marginRight="29dp"
         android:text="add"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="#FFFFFF"/>
 
     <LinearLayout
         android:layout_width="match_parent"

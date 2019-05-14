@@ -72,7 +72,7 @@
     <TextView
         android:id="@+id/eveName"
         android:layout_width="300dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="350dp"
         android:layout_marginEnd="8dp"
@@ -87,7 +87,7 @@
     <TextView
         android:id="@+id/eveDate"
         android:layout_width="300dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="70dp"

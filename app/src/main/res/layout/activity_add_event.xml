@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="addEvent"
+        android:text="Add Event"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/eventImage"
         app:layout_constraintEnd_toEndOf="parent"

@@ -26,6 +26,7 @@
         android:layout_marginEnd="10dp"
         android:text="Event Name"
         android:textSize="20dp"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eventImage" />
@@ -39,6 +40,7 @@
         android:layout_marginEnd="10dp"
         android:text="Event Location"
         android:textSize="20dp"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eventTime" />
@@ -49,6 +51,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
+        android:textColor="#FFFFFF"
         android:layout_marginEnd="10dp"
         android:text="Event Time"
         android:textSize="20dp"
@@ -70,7 +73,9 @@
         app:layout_constraintHorizontal_bias="0.636"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eventLocation"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="#FFFFFF"/>
 
     <ListView
         android:id="@+id/listview"

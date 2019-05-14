@@ -118,8 +118,6 @@ public class ClubProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(ClubProfileActivity.this, EventActivity.class);
                 intent.putExtra("Event", card);
                 startActivity(intent);
-                finish();
-                return;
 
             }
         });
