@@ -16,10 +16,10 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import androidx.annotation.NonNull;
 
-public class arrayAdapter extends ArrayAdapter<ClubEvent> {
+public class AdapterMain extends ArrayAdapter<ClubEvent> {
 
     Context context;
-    public arrayAdapter(Context context , int resourceId , List<ClubEvent>items){
+    public AdapterMain(Context context , int resourceId , List<ClubEvent>items){
         super(context,resourceId,items);
     }
 

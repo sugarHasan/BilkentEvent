@@ -62,7 +62,7 @@ public class AddPersonalEvent extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String rand = RandomString.generate(10);
-                userDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Person").child(currentUID).child("Personal Events").child(rand);
+                userDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Person").child(currentUID).child("PersonalEvents").child(rand);
 
                 final String year = etYear.getText().toString();
                 final String month = etMonth.getText().toString();

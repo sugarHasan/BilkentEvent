@@ -38,7 +38,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private arrayAdapter arrayAdapter;
+    private AdapterMain arrayAdapter;
     List<ClubEvent> rowItems;
     private Button bProfile , bLogout, bCalendar;
     private TextView evName, evDate;
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-        arrayAdapter = new arrayAdapter(this, R.layout.item,rowItems);
+        arrayAdapter = new AdapterMain(this, R.layout.item,rowItems);
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
