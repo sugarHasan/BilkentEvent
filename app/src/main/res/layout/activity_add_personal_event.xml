@@ -1,143 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/day"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/event1"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="74dp"
-        android:layout_marginTop="63dp"
-        android:layout_marginRight="250dp"
-        android:layout_marginBottom="85dp"
-        android:text="CREATE"
-        android:visibility="visible" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginRight="81dp"
-        android:layout_marginBottom="-2dp"
-        android:layout_toEndOf="@+id/button2"
-        android:text="CANCEL"
-        android:visibility="visible" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="208dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textTime"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="203dp"
-        android:layout_marginRight="203dp"
-        android:text="Set Time" />
-
-    <TextView
-        android:id="@+id/textTime"
-        android:layout_width="401dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/date"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:text="00:00"
-        android:textSize="30sp" />
-
-    <TextView
-        android:id="@+id/textTime2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dateText"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="289dp"
-        android:layout_marginRight="289dp"
-        android:text="Set Time"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textTime3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button4"
-        android:layout_marginTop="27dp"
-        android:text="Event"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="233dp"
-        android:layout_height="33dp"
-        android:layout_below="@+id/textTime2"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="182dp"
-        android:layout_marginRight="182dp"
-        android:text="TIME: "
-        android:textSize="30sp" />
+        android:layout_marginStart="70dp"
+        android:ems="10"
+        android:hint="Day"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/month"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/month" />
 
     <EditText
-        android:id="@+id/event1"
-        android:layout_width="296dp"
+        android:id="@+id/topic"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="70dp"
+        android:hint="Topic"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textAppearance="@android:style/TextAppearance.Holo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/month" />
+
+    <EditText
+        android:id="@+id/month"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textTime3"
-        android:layout_marginTop="17dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="Month"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:inputType="number"
+        app:layout_constraintEnd_toStartOf="@+id/year"
+        app:layout_constraintStart_toEndOf="@+id/day"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/year"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="70dp"
+        android:ems="10"
+        android:hint="Year"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/month"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/month" />
 
     <Button
-        android:id="@+id/button6"
-        android:layout_width="74dp"
-        android:layout_height="38dp"
-        android:layout_alignTop="@+id/event1"
-        android:layout_alignBottom="@+id/event1"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="0dp"
-        android:layout_toEndOf="@+id/event1"
-        android:text="ENTER" />
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="addEvent"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/endTime" />
 
-    <TextView
-        android:id="@+id/dateText"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="166dp"
-        android:ems="20"
-        android:inputType="textPersonName"
-        android:text="DATE :"
-        android:textSize="25dp"
-        android:textStyle="bold" />
+    <EditText
+        android:id="@+id/startTime"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:ems="10"
+        android:hint="Starting Time"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/endTime"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/endTime" />
+
+    <EditText
+        android:id="@+id/endTime"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="70dp"
+        android:ems="10"
+        android:hint="Ending Time"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/startTime"
+        app:layout_constraintTop_toBottomOf="@+id/topic" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

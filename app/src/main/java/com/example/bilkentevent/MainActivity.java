@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference userDb;
     private String currentUid;
-    private String eventName, eventDate;
 
 
     @Override
@@ -53,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
         evName = (TextView) findViewById(R.id.eveName);
         evDate = (TextView) findViewById(R.id.eveDate);
-        eventName = "";
-        eventDate = "";
 
 
 
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                             evDate.setText(obj.getDayOfEvent().getDay() + " " + dateConverter(obj.getDayOfEvent().getMonth() + "") + " " + obj.getDayOfEvent().getYear() + "   " + obj.getStartTime() + " - " + obj.getFinishTime());
                         }
                         else {
-                            evName.setText("");
+                            evName.setText("There is no upcoming event.");
                             evDate.setText("");
                         }
                     }
@@ -282,6 +281,20 @@ public class MainActivity extends AppCompatActivity {
 
     public String dateConverter (String month) {
         return months[Integer.parseInt(month) - 1];
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Exit")
+                .setMessage("Do you want to exit?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        MainActivity.super.onBackPressed();
+                    }
+                }).create().show();
     }
 
 

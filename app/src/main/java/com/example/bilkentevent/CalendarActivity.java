@@ -55,7 +55,7 @@ public class CalendarActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-        myCalender = findViewById(R.id.calender);
+        myCalender = findViewById(R.id.calendar);
         mybutton = (Button) findViewById(R.id.button3);
         //final Intent i =new Intent(this ,Main2Activity.class);
         final Intent i = new Intent(CalendarActivity.this,AddPersonalEvent.class);
@@ -95,8 +95,6 @@ public class CalendarActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent = new Intent (CalendarActivity.this , AddPersonalEvent.class);
                 startActivity(intent);
-                finish();
-                return;
             }
         });
 
@@ -113,8 +111,6 @@ public class CalendarActivity extends AppCompatActivity{
                     Intent intent = new Intent(CalendarActivity.this, EventActivity.class);
                     intent.putExtra("Event", card);
                     startActivity(intent);
-                    finish();
-                    return;
                 }
             }
         });

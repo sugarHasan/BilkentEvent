@@ -21,6 +21,7 @@
         <activity android:name=".EventActivity" />
         <activity android:name=".ClubRegisterActivity" />
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".AddEventActivity" />
         <activity android:name=".EventsListActivity" />
         <activity android:name=".ClubLoginActivity" />

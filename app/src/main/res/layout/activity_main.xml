@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#57004B"
     tools:context="MainActivity">
 
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
@@ -11,8 +12,8 @@
         android:layout_width="411dp"
         android:layout_height="520dp"
         android:layout_marginBottom="92dp"
-        android:background="#ffeee9e2"
-        app:layout_constraintBottom_toTopOf="@+id/profile"
+        android:background="@drawable/background"
+        app:layout_constraintBottom_toTopOf="@+id/logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,26 +21,31 @@
         tools:context=".MyActivity" />
 
     <Button
-        android:id="@+id/profile"
+        android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="80dp"
-        android:text="PROFILE"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="#FFFFFF"
+        android:text="Logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/calendar" />
 
     <Button
-        android:id="@+id/logout"
+        android:id="@+id/profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="72dp"
 
         android:layout_marginBottom="80dp"
-        android:text="Logout"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="#FFFFFF"
+        android:text="PROFILE"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/calendar"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,10 +60,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="80dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="#FFFFFF"
         android:text="Calendar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/profile"
-        app:layout_constraintStart_toEndOf="@+id/logout"
+        app:layout_constraintEnd_toStartOf="@+id/logout"
+        app:layout_constraintStart_toEndOf="@+id/profile"
         app:layout_constraintTop_toTopOf="@+id/profile"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -69,6 +77,8 @@
         android:layout_marginTop="350dp"
         android:layout_marginEnd="8dp"
         android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,15 +89,31 @@
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="29dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="70dp"
         android:text="Event Date"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/frame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eveName" />
+
+    <TextView
+        android:id="@+id/upcomingEvents"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="125dp"
+        android:text="Upcoming Events:"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/eveName"
+        app:layout_constraintEnd_toEndOf="@+id/frame"
+        app:layout_constraintStart_toStartOf="@+id/frame"
+        app:layout_constraintTop_toTopOf="@+id/frame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
