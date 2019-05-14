@@ -25,15 +25,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
+/**
+ * This interface displays the events user selected in a calender.
+ * @author Hasan Yıldırım
+ * @version 13/05/19
+ */
 public class CalendarActivity extends AppCompatActivity{
     CalendarView myCalender;
-    Event myEvent;
-    TextView text;
     Date date;
     private Button mybutton;
-    int day;
-    int thismonth;
-    int thisyear;
 
     private AdapterEvent adapter;
 
@@ -59,9 +59,9 @@ public class CalendarActivity extends AppCompatActivity{
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth)
             {
-                if(adapter.isEmpty() == false)
+                if(!adapter.isEmpty())
                     adapter.clear();
-                if(list.isEmpty() == false)
+                if(!list.isEmpty())
                     list.clear();
                 date = new Date(dayOfMonth,month+1,year);
                 i.putExtra("day",dayOfMonth);
@@ -74,7 +74,7 @@ public class CalendarActivity extends AppCompatActivity{
                         list.add(checker);
                     }
                 }
-                if(list.isEmpty() == false) {
+                if(!list.isEmpty()) {
                     adapter = new AdapterEvent(CalendarActivity.this, R.layout.listevent,list);
                     listView.setAdapter(adapter);
                 }
@@ -119,29 +119,28 @@ public class CalendarActivity extends AppCompatActivity{
                 if (dataSnapshot.exists()) {
 
 
-                            HashMap<String, Object> datas = (HashMap<String, Object>) dataSnapshot.getValue();
-                            if(datas==null)
-                                return;
-                            String topic = (String)datas.get("Topic");
-                            String day = (String)datas.get("Day");
-                            String month = (String)datas.get("Month");
-                            String year = (String)datas.get("Year");
-                            String startTime = (String)datas.get("Start Time");
-                            String endTime = (String)datas.get("End Time");
+                    HashMap<String, Object> datas = (HashMap<String, Object>) dataSnapshot.getValue();
+                    if(datas==null)
+                        return;
+                    String topic = (String)datas.get("Topic");
+                    String day = (String)datas.get("Day");
+                    String month = (String)datas.get("Month");
+                    String year = (String)datas.get("Year");
+                    String startTime = (String)datas.get("Start Time");
+                    String endTime = (String)datas.get("End Time");
 
-                            if(isPast(day,month,year) == false){
-                                DatabaseReference r = dataSnapshot.getRef();
-                                r.child("Passed").setValue(true);
-                            }
+                    if(isPast(day,month,year) == false){
+                        DatabaseReference r = dataSnapshot.getRef();
+                        r.child("Passed").setValue(true);
+                    }
 
-                                int dayOfEvent = Integer.parseInt(day);
-                                int monthOfEvent = Integer.parseInt(month);
-                                int yearOfEvent = Integer.parseInt(year);
-                                Date date = new Date(dayOfEvent,monthOfEvent,yearOfEvent);
-                                PersonalEvent pers = new PersonalEvent(date,startTime,endTime,topic);
-                                box.addEvent(pers);
-
-                        }
+                    int dayOfEvent = Integer.parseInt(day);
+                    int monthOfEvent = Integer.parseInt(month);
+                    int yearOfEvent = Integer.parseInt(year);
+                    Date date = new Date(dayOfEvent,monthOfEvent,yearOfEvent);
+                    PersonalEvent pers = new PersonalEvent(date,startTime,endTime,topic);
+                    box.addEvent(pers);
+                }
 
 
             }
@@ -204,8 +203,6 @@ public class CalendarActivity extends AppCompatActivity{
                                     }
                                         ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), start, end, topic, clubID, eventID, location,(int) snapshot.child("Connections").child("Attend").getChildrenCount());
                                         box.addEvent(temp);
-
-
                                 }
 
                                 @Override

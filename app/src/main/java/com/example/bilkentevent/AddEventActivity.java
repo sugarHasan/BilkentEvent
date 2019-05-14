@@ -112,8 +112,6 @@ public class AddEventActivity extends AppCompatActivity {
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 String den = RandomString.generate(10);
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs").child(currentUid).child("Events").child(den).child("Profile");
 
@@ -126,20 +124,20 @@ public class AddEventActivity extends AppCompatActivity {
                 final String location = etLocation.getText().toString();
                 final String startTime = etStartTime.getText().toString();
                 final String endTime = etEndTime.getText().toString();
-                    HashMap<String, Object> datas = new HashMap<String, Object>();
-                    datas.put("Topic" ,topic);
-                    datas.put("Location" , location);
-                    datas.put("Month" , month);
-                    datas.put("Day" ,day);
-                    datas.put("Year" , year);
-                    datas.put("Start Time" , startTime);
-                    datas.put("End Time", endTime);
-                    datas.put("Passed" , false);
-                    datas.put("Active" , true);
+                HashMap<String, Object> datas = new HashMap<String, Object>();
+                datas.put("Topic" ,topic);
+                datas.put("Location" , location);
+                datas.put("Month" , month);
+                datas.put("Day" ,day);
+                datas.put("Year" , year);
+                datas.put("Start Time" , startTime);
+                datas.put("End Time", endTime);
+                datas.put("Passed" , false);
+                datas.put("Active" , true);
 
-                    ref.setValue(datas);
-                    uploadImage(den);
-                    finish();
+                ref.setValue(datas);
+                uploadImage(den);
+                finish();
                 }
         });
 
@@ -175,9 +173,8 @@ public class AddEventActivity extends AppCompatActivity {
         {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
-            progressDialog.show();
 
-            StorageReference ref = storageReference.child("images/"+ eventID);
+            StorageReference ref = storageReference.child("images/" + eventID);
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override

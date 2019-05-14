@@ -15,14 +15,16 @@
         <TextView
             android:id="@+id/topic"
             android:layout_width="245dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:maxWidth="220dp"
-            android:maxHeight="80dp"
+            android:maxHeight="100dp"
+            android:minHeight="40dp"
             android:text="animal"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#FFFFFF"
-            android:textSize="19dp" />
+            tools:autoSizeMaxTextSize="19dp"
+            tools:autoSizeMinTextSize="15dp" />
 
         <TextView
             android:id="@+id/timeStart"
