@@ -43,6 +43,11 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
+/**
+ * This interface make clubs be able to create new events that will be displayed in calendar.
+ * @author Hasan Yıldırım & İbrahim Karakoç (some minor changes)
+ * @version 10/05/19
+ */
 public class AddEventActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -203,7 +208,6 @@ class RandomString {
 
     /**
      * Generates random string of given length from Base65 alphabet (numbers, lowercase letters, uppercase letters).
-     *
      * @param count length
      * @return random string of given length
      */

@@ -36,6 +36,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * This is the main page. It displays the event cards, and has buttons to other screens.
+ * @author Hasan Yıldırım, İbrahim Karakoç (minor contribution)
+ * @version 13/05/19
+ */
 public class MainActivity extends AppCompatActivity {
 
     private AdapterMain arrayAdapter;
@@ -54,61 +59,60 @@ public class MainActivity extends AppCompatActivity {
 
         evName = (TextView) findViewById(R.id.eveName);
         evDate = (TextView) findViewById(R.id.eveDate);
-
-
-
-
         userDb = FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth = FirebaseAuth.getInstance();
         currentUid = mAuth.getCurrentUser().getUid();
         rowItems = new ArrayList<ClubEvent>();
 
-            final DatabaseReference getter = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs");
-            getter.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    if (dataSnapshot.exists()) {
-                        final String clubId = dataSnapshot.getKey();
-                        for (DataSnapshot childSnapshot : dataSnapshot.child("Events").getChildren()) {
-                            if(childSnapshot.exists() && !childSnapshot.child("Connections").child("Pass").hasChild(currentUid) && !childSnapshot.child("Connections").child("Attend").hasChild(currentUid))    {
-                                HashMap<String, Object> datas = (HashMap<String, Object>) childSnapshot.child("Profile").getValue();
-                                if(datas==null)
-                                    return;
-                                String start = (String)datas.get("Start Time");
-                                String end = (String)datas.get("End Time");
-                                String day = (String)datas.get("Day");
-                                String month = (String)datas.get("Month");
-                                String year = (String)datas.get("Year");
-                                String topic = (String)datas.get("Topic");
-                                String location = (String)datas.get("Location");
-                                boolean active =  (boolean)datas.get("Active");
-                                boolean past =  (boolean)datas.get("Passed");
+        // This is to create event cards.
+        final DatabaseReference getter = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs");
+        getter.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if (dataSnapshot.exists()) {
+                    final String clubId = dataSnapshot.getKey();
+                    for (DataSnapshot childSnapshot : dataSnapshot.child("Events").getChildren()) {
+                        if(childSnapshot.exists() && !childSnapshot.child("Connections").child("Pass").hasChild(currentUid) && !childSnapshot.child("Connections").child("Attend").hasChild(currentUid))    {
+                            HashMap<String, Object> datas = (HashMap<String, Object>) childSnapshot.child("Profile").getValue();
+                            if(datas==null)
+                                return;
+                            String start = (String)datas.get("Start Time");
+                            String end = (String)datas.get("End Time");
+                            String day = (String)datas.get("Day");
+                            String month = (String)datas.get("Month");
+                            String year = (String)datas.get("Year");
+                            String topic = (String)datas.get("Topic");
+                            String location = (String)datas.get("Location");
+                            boolean active =  (boolean)datas.get("Active");
+                            boolean past =  (boolean)datas.get("Passed");
 
-                                if((active == true) && (past == false)) {
+                            if((active == true) && (past == false)) {
 
-                                    if (isPast(day, month, year) == false) {
-                                        DatabaseReference r = childSnapshot.getRef();
-                                        r.child("Profile").child("Passed").setValue(true);
-                                    } else {
-                                        ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), start, end, topic, clubId, childSnapshot.getKey(), location, (int) childSnapshot.child("Connections").child("Attend").getChildrenCount());
-                                        rowItems.add(temp);
-                                        arrayAdapter.notifyDataSetChanged();
-
+                                if (isPast(day, month, year) == false) {
+                                    DatabaseReference r = childSnapshot.getRef();
+                                    r.child("Profile").child("Passed").setValue(true);
+                                } else {
+                                    ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), start, end, topic, clubId, childSnapshot.getKey(), location, (int) childSnapshot.child("Connections").child("Attend").getChildrenCount());
+                                    rowItems.add(temp);
+                                    arrayAdapter.notifyDataSetChanged();
                                     }
                                 }
                             }
 
                         }
-                        Collections.sort(rowItems);
-                        if ( rowItems.size() >= 1 ) {
-                            ClubEvent obj = (ClubEvent) rowItems.get(0);
-                            evName.setText(obj.getTopic());
-                            evDate.setText(obj.getDayOfEvent().getDay() + " " + dateConverter(obj.getDayOfEvent().getMonth() + "") + " " + obj.getDayOfEvent().getYear() + "   " + obj.getStartTime() + " - " + obj.getFinishTime());
-                        }
-                        else {
-                            evName.setText("There is no upcoming event.");
-                            evDate.setText("");
-                        }
+                    Collections.sort(rowItems);
+
+                    // After creating the event cards, this part takes the first card's info
+                    // and displays it in the screen.
+                    if ( rowItems.size() >= 1 ) {
+                        ClubEvent obj = (ClubEvent) rowItems.get(0);
+                        evName.setText(obj.getTopic());
+                        evDate.setText(obj.getDayOfEvent().getDay() + " " + dateConverter(obj.getDayOfEvent().getMonth() + "") + " " + obj.getDayOfEvent().getYear() + "   " + obj.getStartTime() + " - " + obj.getFinishTime());
+                    }
+                    else {
+                        evName.setText("There is no upcoming event.");
+                        evDate.setText("");
+                    }
                     }
                 }
 
@@ -133,19 +137,21 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+        // This part is to make cards swappable.
         arrayAdapter = new AdapterMain(this, R.layout.item,rowItems);
-
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
-
-
         flingContainer.setAdapter(arrayAdapter);
+
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
+            // We need to remove the swapped cards.
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
                 rowItems.remove(0);
                 arrayAdapter.notifyDataSetChanged();
+
+                // After swapping a card, displayed info is changed.
                 if ( rowItems.size() >= 1 ) {
                     ClubEvent obj = (ClubEvent) rowItems.get(0);
                     evName.setText(obj.getTopic());
@@ -157,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+            // Swapping left means the user will not participate.
             @Override
             public void onLeftCardExit(Object dataObject) {
                 //Do something on the left!
@@ -165,11 +172,11 @@ public class MainActivity extends AppCompatActivity {
                 ClubEvent obj = (ClubEvent) dataObject;
                 String clubId = obj.getClubID();
                 String eventId = obj.getEventID();
+
+                // In order not to show user the same event card again, we change the booleans in our database.
                 userDb.child("Person").child(currentUid).child("Connections").child(clubId).child("Pass").child(eventId).setValue(true);
                 userDb.child("Clubs").child(clubId).child("Events").child(eventId).child("Connections").child("Pass").child(currentUid).setValue(true);
                 Toast.makeText(MainActivity.this , "Maybe, next time?",Toast.LENGTH_SHORT).show();
-
-
             }
 
             @Override
@@ -177,9 +184,10 @@ public class MainActivity extends AppCompatActivity {
                 ClubEvent obj = (ClubEvent) dataObject;
                 String clubId = obj.getClubID();
                 String eventId = obj.getEventID();
+                // In order not to show user the same event card again, we change the booleans in our database.
+                // Also, we need this to display the user in event page.
                 userDb.child("Person").child(currentUid).child("Connections").child(clubId).child("Attend").child(eventId).setValue(true);
                 userDb.child("Clubs").child(clubId).child("Events").child(eventId).child("Connections").child("Attend").child(currentUid).setValue(true);
-
                 Toast.makeText(MainActivity.this , "See you there!!",Toast.LENGTH_SHORT).show();
             }
 
@@ -277,6 +285,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // This method is used when displaying the info. Instead of the number of the months, it shows the name.
     public static final String[] months = {"Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
     public String dateConverter (String month) {

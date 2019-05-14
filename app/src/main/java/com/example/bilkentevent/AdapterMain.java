@@ -16,6 +16,11 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import androidx.annotation.NonNull;
 
+/**
+ * This is an adapter for the main page to hold event cards.
+ * @author Hasan Yıldırım
+ * @version
+ */
 public class AdapterMain extends ArrayAdapter<ClubEvent> {
 
     Context context;
@@ -30,11 +35,9 @@ public class AdapterMain extends ArrayAdapter<ClubEvent> {
         if(convertView==null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item , parent , false);
         }
+
         final ImageView image1 = (ImageView) convertView.findViewById(R.id.eventImage);
-
         String getStorage = "images/"+event.getEventID();
-
-
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
         storageRef.child(getStorage).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -51,9 +54,6 @@ public class AdapterMain extends ArrayAdapter<ClubEvent> {
                 Picasso.get().load("https://media.wired.com/photos/5b17381815b2c744cb650b5f/master/w_1164,c_limit/GettyImages-134367495.jpg").into(image1);
             }
         });
-
-
-
         return convertView;
     }
 

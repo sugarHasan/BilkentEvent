@@ -24,6 +24,12 @@ import java.util.HashMap;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * This class is to be able to display other users to current user.
+ * @author Hasan Yıldırım
+ * @version 01/05/19
+ */
+
 public class PersonActivity extends AppCompatActivity {
     private TextView name, motto;
     private ImageView image;
@@ -48,14 +54,14 @@ public class PersonActivity extends AppCompatActivity {
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
         storageRef.child(getStorage).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-                Picasso.get().load(uri.toString()).into(image);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.get().load(uri.toString()).into(image);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
                 Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/bilkent-event.appspot.com/o/profileImages%2FcXfPO8N9Ybf5K35y0sRT5fs46p33?alt=media&token=e11f7e6f-1ccb-4872-830d-b92b3fceb270").into(image);
             }

@@ -9,9 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,8 +29,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import android.view.KeyEvent;
 
+/**
+ * An interface to display a particular event.
+ * @author Hasan Yıldırım & H. İbrahim Karakoç
+ * @version 14/05-19
+ */
 public class EventActivity extends AppCompatActivity {
 
     private TextView name, location, date;
@@ -43,30 +45,31 @@ public class EventActivity extends AppCompatActivity {
     private String currentUid;
     private  ArrayList<String> participants;
     private ArrayList<Person> list;
-    personAdapter adapter;
+    AdapterPerson adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-
         Intent i = getIntent();
         final Cards temp = (Cards)i.getSerializableExtra("Event");
-
         final ListView listView =  (ListView)findViewById(R.id.listview);
-
+        addEvent = (Button) findViewById(R.id.addEvent);
+        image = (ImageView) findViewById(R.id.eventImage);
         name = (TextView) findViewById(R.id.eventName);
         location = (TextView) findViewById(R.id.eventLocation);
         date = (TextView) findViewById(R.id.eventTime);
         participants = new ArrayList<String>();
         list = new ArrayList<Person>();
-        adapter = new personAdapter(EventActivity.this, R.layout.listperson,list);
+        adapter = new AdapterPerson(EventActivity.this, R.layout.listperson,list);
 
         listView.setAdapter(adapter);
 
         final DatabaseReference personGetter = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs").child(temp.getClubID()).child("Events").child(temp.getEventID()).child("Connections").child("Attend");
 
+
+        // This is for displaying the participants.
         personGetter.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -77,6 +80,7 @@ public class EventActivity extends AppCompatActivity {
                         getPerson.child("Profile").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot snapshot) {
+                                // Gets the information of users and adds them to an adapter.
                                 HashMap<String, Object> datas = (HashMap<String, Object>) snapshot.getValue();
                                 if(datas==null)
                                     return;
@@ -122,7 +126,7 @@ public class EventActivity extends AppCompatActivity {
 
         final DatabaseReference getter = FirebaseDatabase.getInstance().getReference().child("Users").child("Clubs").child(temp.getClubID()).child("Events").child(temp.getEventID());
 
-
+        // This is for displaying the title, location and date&time of the event.
         getter.child("Profile").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -148,15 +152,13 @@ public class EventActivity extends AppCompatActivity {
         });
 
 
-        addEvent = (Button) findViewById(R.id.addEvent);
-        image = (ImageView) findViewById(R.id.eventImage);
 
 
+
+
+        // This is for displaying the picture of the event.
         String getStorage = "images/"+temp.getEventID();
-
-
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-
         storageRef.child(getStorage).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -192,8 +194,6 @@ public class EventActivity extends AppCompatActivity {
                 Intent intent = new Intent(EventActivity.this, PersonActivity.class);
                 intent.putExtra("Person", p);
                 startActivity(intent);
-                finish();
-                return;
             }
 
         });
@@ -223,7 +223,7 @@ public class EventActivity extends AppCompatActivity {
         }
 
         final ListView listView =  (ListView)findViewById(R.id.listview);
-        adapter = new personAdapter(EventActivity.this, R.layout.listperson,list);
+        adapter = new AdapterPerson(EventActivity.this, R.layout.listperson,list);
         listView.setAdapter(adapter);
 
 

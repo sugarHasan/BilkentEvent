@@ -36,6 +36,11 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * This interface is current user's profile page.
+ * @author Hasan Yıldırım
+ * @version 13/05/19
+ */
 public class ProfileActivity extends AppCompatActivity {
 
     private EditText mNameField, mMottoField;

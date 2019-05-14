@@ -50,7 +50,6 @@ public class AddPersonalEvent extends AppCompatActivity {
         etDay = (EditText) findViewById(R.id.day);
         etMonth = (EditText) findViewById(R.id.month);
         etTopic = (EditText) findViewById(R.id.topic);
-        etLocation = (EditText) findViewById(R.id.location);
         etStartTime = (EditText) findViewById(R.id.startTime);
         etEndTime = (EditText) findViewById(R.id.endTime);
 
@@ -68,12 +67,10 @@ public class AddPersonalEvent extends AppCompatActivity {
                 final String month = etMonth.getText().toString();
                 final String day = etDay.getText().toString();
                 final String topic = etTopic.getText().toString();
-                final String location = etLocation.getText().toString();
                 final String startTime = etStartTime.getText().toString();
                 final String endTime = etEndTime.getText().toString();
                 HashMap<String, Object> datas = new HashMap<String, Object>();
                 datas.put("Topic", topic);
-                datas.put("Location", location);
                 datas.put("Month", month);
                 datas.put("Day", day);
                 datas.put("Year", year);

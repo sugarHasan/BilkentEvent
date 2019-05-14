@@ -10,11 +10,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -47,7 +45,7 @@ public class ClubProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mUserDatabase;
-    private eventAdapter adapter;
+    private AdapterEvent adapter;
     private String userId, name, motto;
     private ListView listView;
     EventBox box;
@@ -87,7 +85,7 @@ public class ClubProfileActivity extends AppCompatActivity {
         bGetEvents.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view)  {
                 if(list.isEmpty() == false) {
-                    adapter = new eventAdapter(ClubProfileActivity.this, R.layout.listevent,list);
+                    adapter = new AdapterEvent(ClubProfileActivity.this, R.layout.listevent,list);
                     listView.setAdapter(adapter);
                 }
             }
@@ -97,7 +95,7 @@ public class ClubProfileActivity extends AppCompatActivity {
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
         final String currentUID = mAuth.getUid();
-        adapter = new eventAdapter(ClubProfileActivity.this, R.layout.listevent,list);
+        adapter = new AdapterEvent(ClubProfileActivity.this, R.layout.listevent,list);
 
         ClubEvent temp = new ClubEvent(new Date(12,12,2019), "","","","","","",12);
         box.addEvent(temp);

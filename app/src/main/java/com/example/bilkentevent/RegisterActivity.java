@@ -3,18 +3,17 @@ package com.example.bilkentevent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,13 +32,16 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+/**
+ * This is an interface for users to create accounts.
+ * @author Hasan Yıldırım
+ * @version 20/04/19
+ */
 public class RegisterActivity extends AppCompatActivity {
-    public Person user;
     private Button bRegister;
     private EditText etMail, etPassword, etName, etMotto;
+    private TextView imagePickedTeller;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener fireBaseAuthStateListener;
     private ImageView mImage;
@@ -52,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registire);
+        setContentView(R.layout.activity_register);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -77,6 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.password);
         etMotto = (EditText) findViewById(R.id.motto);
         mImage = (ImageView) findViewById(R.id.profileImage);
+        imagePickedTeller = (TextView) findViewById(R.id.pickImageTeller);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -88,8 +91,6 @@ public class RegisterActivity extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-
-                System.out.println("button click");
             }
         });
 
@@ -140,6 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 mImage.setImageBitmap(bitmap);
+                imagePickedTeller.setText("");
             }
             catch (IOException e)
             {

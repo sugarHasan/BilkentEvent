@@ -7,6 +7,11 @@ package com.example.bilkentevent;
 
 import android.widget.ImageView;
 
+/**
+ * Club class.
+ * @author Hasan Yıldırım
+ * @version
+ */
 public class Club {
     //constants
 

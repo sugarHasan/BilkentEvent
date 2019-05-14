@@ -21,11 +21,16 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 
-public class personAdapter extends ArrayAdapter<Person> {
+/**
+ * This adapter holds person, so they can be displayed in relevant pages.
+ * @author Hasan Yıldırım
+ * @version
+ */
+public class AdapterPerson extends ArrayAdapter<Person> {
 
     ImageView image;
     Context context;
-    public personAdapter(Context context , int resourceId , List<Person>items){
+    public AdapterPerson(Context context , int resourceId , List<Person>items){
         super(context,resourceId,items);
     }
 

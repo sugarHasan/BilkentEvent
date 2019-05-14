@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class eventAdapter extends ArrayAdapter<Event> {
+public class AdapterEvent extends ArrayAdapter<Event> {
 
     Context context;
-    public eventAdapter(Context context , int resourceId , List<Event>items){
+    public AdapterEvent(Context context , int resourceId , List<Event>items){
         super(context,resourceId,items);
     }
 

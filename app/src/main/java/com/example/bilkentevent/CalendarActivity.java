@@ -4,22 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -31,7 +23,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
 
 public class CalendarActivity extends AppCompatActivity{
@@ -44,7 +35,7 @@ public class CalendarActivity extends AppCompatActivity{
     int thismonth;
     int thisyear;
 
-    private eventAdapter adapter;
+    private AdapterEvent adapter;
 
 
     EventBox box;
@@ -62,7 +53,7 @@ public class CalendarActivity extends AppCompatActivity{
         final ArrayList<Event> list = new ArrayList<Event>();
         box = new EventBox();
         getEvents();
-        adapter = new eventAdapter(CalendarActivity.this, R.layout.listevent,list);
+        adapter = new AdapterEvent(CalendarActivity.this, R.layout.listevent,list);
         final ListView  listView =  (ListView)findViewById(R.id.listView1);
         myCalender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -84,7 +75,7 @@ public class CalendarActivity extends AppCompatActivity{
                     }
                 }
                 if(list.isEmpty() == false) {
-                    adapter = new eventAdapter(CalendarActivity.this, R.layout.listevent,list);
+                    adapter = new AdapterEvent(CalendarActivity.this, R.layout.listevent,list);
                     listView.setAdapter(adapter);
                 }
             }
@@ -135,8 +126,8 @@ public class CalendarActivity extends AppCompatActivity{
                             String day = (String)datas.get("Day");
                             String month = (String)datas.get("Month");
                             String year = (String)datas.get("Year");
-                            String hour = (String)datas.get("Hour");
-                            String minute = (String)datas.get("Minute");
+                            String startTime = (String)datas.get("Start Time");
+                            String endTime = (String)datas.get("End Time");
 
                             if(isPast(day,month,year) == false){
                                 DatabaseReference r = dataSnapshot.getRef();
@@ -146,11 +137,8 @@ public class CalendarActivity extends AppCompatActivity{
                                 int dayOfEvent = Integer.parseInt(day);
                                 int monthOfEvent = Integer.parseInt(month);
                                 int yearOfEvent = Integer.parseInt(year);
-                                int hourOfEvent = Integer.parseInt(hour);
-                                int minuteOfEvent = Integer.parseInt(minute);
                                 Date date = new Date(dayOfEvent,monthOfEvent,yearOfEvent);
-                                Time time = new Time(hourOfEvent,minuteOfEvent);
-                                PersonalEvent pers = new PersonalEvent(date,time,time,topic);
+                                PersonalEvent pers = new PersonalEvent(date,startTime,endTime,topic);
                                 box.addEvent(pers);
 
                         }

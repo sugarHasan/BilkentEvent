@@ -2,6 +2,11 @@ package com.example.bilkentevent;
 
 import java.io.Serializable;
 
+/**
+ * This class holds the relevant (for displaying) information of events.
+ * @author Hasan Yıldırım
+ * @version
+ */
 public class Cards implements Serializable {
 
     private String clubID;

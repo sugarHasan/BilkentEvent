@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".PersonActivity">
 
     <ImageView
-        android:id="@+id/eventImage"
+        android:id="@+id/profilePicture"
         android:layout_width="410dp"
         android:layout_height="352dp"
         app:layout_constraintBottom_toTopOf="@+id/name"
