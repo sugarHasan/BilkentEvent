@@ -13,11 +13,11 @@
         android:id="@+id/profileImage"
         android:layout_width="wrap_content"
         android:layout_height="120dp"
-        android:layout_marginLeft="20sp"
         android:layout_marginTop="20sp"
         android:layout_marginBottom="20sp"
         android:maxWidth="370dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/name"

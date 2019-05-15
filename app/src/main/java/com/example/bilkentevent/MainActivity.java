@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AdapterMain arrayAdapter;
     List<ClubEvent> rowItems;
-    private Button bProfile , bLogout, bCalendar;
+    private Button bProfile , bLogout, bCalendar, bAllEvents;
     private TextView evName, evDate;
     private FirebaseAuth mAuth;
     private DatabaseReference userDb;
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        bAllEvents = (Button) findViewById(R.id.allEvents);
         evName = (TextView) findViewById(R.id.eveName);
         evDate = (TextView) findViewById(R.id.eveDate);
         userDb = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -239,6 +240,13 @@ public class MainActivity extends AppCompatActivity {
         bCalendar.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view)  {
                 Intent intent = new Intent (MainActivity.this , CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        bAllEvents.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view)  {
+                Intent intent = new Intent (MainActivity.this , AllEventsActivity.class);
                 startActivity(intent);
             }
         });

@@ -1,43 +1,43 @@
 package com.example.bilkentevent;
+
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
 
-public class AdapterEvent extends ArrayAdapter<Event> {
+/**
+ * This is a modified version of AdapterEvent. It displays the date instead of the time.
+ * @author İbrahim Karakoç & Hasan Yıldırım
+ * @version 15/05/19
+ */
+public class AdapterAllEvents extends AdapterEvent {
 
     Context context;
-    public AdapterEvent(Context context , int resourceId , List<Event>items){
+    public AdapterAllEvents(Context context , int resourceId , List<Event> items){
         super(context,resourceId,items);
     }
 
+    @Override
     public View getView(int position, View convertView, ViewGroup parent){
 
         // Get the data item for this position
         Event e = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.listevent, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_all_events, parent, false);
         }
 
-        // Lookup view for data population
+        // Change the views.
         TextView topic = (TextView) convertView.findViewById(R.id.topic);
-        TextView timeS = (TextView) convertView.findViewById(R.id.timeStart);
-        TextView timeE = (TextView) convertView.findViewById(R.id.timeEnd);
-        // Populate the data into the template view using the data object
+        TextView date = (TextView) convertView.findViewById(R.id.date);
+
         topic.setText(e.getTopic());
-        timeS.setText(e.getStartTime());
-        timeE.setText(e.getFinishTime());
-
-
-
-
+        date.setText(e.getDayOfEvent().toString());
         return convertView;
     }
 }
+

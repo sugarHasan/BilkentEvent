@@ -27,6 +27,7 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="26dp"
             android:layout_marginBottom="300dp"
+            android:layout_gravity="center"
             android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,19 +43,23 @@
             android:layout_alignBottom="@+id/welcomeSign"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
             android:layout_marginStart="46dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="51dp"
             android:layout_marginBottom="17dp"
-            android:text="    Welcome to Campus Events"
+            android:text="Welcome to Campus Events"
             android:textAlignment="center"
             android:textColor="#FFF"
-            android:textSize="40dp"
+            android:textSize="40sp"
             android:textStyle="bold|italic"
+            app:autoSizeMinTextSize="20sp"
             app:layout_constraintHorizontal_bias="0.003"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/welcomeSign"
-            app:layout_constraintVertical_bias="0.45" />
+            app:layout_constraintVertical_bias="0.45"
+            tools:autoSizeMaxTextSize="40sp"
+            tools:autoSizeMinTextSize="20sp" />
 
 
     </RelativeLayout>
@@ -78,6 +83,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="43dp"
             android:layout_marginTop="18dp"
+            android:layout_gravity="center"
             android:layout_marginEnd="49dp"
             android:layout_marginBottom="25dp"
             android:background="@drawable/loginbuttons"
@@ -92,6 +98,7 @@
 
         <EditText
             android:id="@+id/password"
+            android:layout_gravity="center"
             android:layout_width="335dp"
             android:layout_height="56dp"
             android:layout_alignBottom="@+id/email"
@@ -113,6 +120,7 @@
 
         <Button
             android:id="@+id/loginButton"
+            android:layout_gravity="center"
             android:layout_width="133dp"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/password"
@@ -159,6 +167,7 @@
 
         <TextView
             android:id="@+id/textView3"
+            android:layout_gravity="center"
             android:layout_width="51dp"
             android:layout_height="40dp"
             android:layout_alignBottom="@+id/loginButton"
@@ -174,6 +183,7 @@
 
         <TextView
             android:id="@+id/passwordForgotText"
+            android:layout_gravity="center"
             android:layout_width="408dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/loginButton"
@@ -197,6 +207,7 @@
 
         <Button
             android:id="@+id/signUpButton"
+            android:layout_gravity="center"
             android:layout_width="178dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -215,6 +226,7 @@
 
         <Button
             android:id="@+id/eventOrganizerButton"
+            android:layout_gravity="center"
             android:layout_width="221dp"
             android:layout_height="66dp"
             android:layout_alignParentEnd="true"

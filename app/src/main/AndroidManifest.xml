@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ClubProfileActivity"></activity>
+        <activity android:name=".AllEventsActivity"></activity>
+        <activity android:name=".ClubProfileActivity" />
         <activity android:name=".PersonActivity" />
         <activity android:name=".CalendarActivity" />
         <activity android:name=".AddPersonalEvent" />

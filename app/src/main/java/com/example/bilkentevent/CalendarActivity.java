@@ -36,6 +36,7 @@ public class CalendarActivity extends AppCompatActivity{
     private Button mybutton;
 
     private AdapterEvent adapter;
+    String currentUID;
 
 
     EventBox box;
@@ -48,17 +49,24 @@ public class CalendarActivity extends AppCompatActivity{
         setContentView(R.layout.activity_calendar);
         myCalender = findViewById(R.id.calendar);
         mybutton = (Button) findViewById(R.id.button3);
-        //final Intent i =new Intent(this ,Main2Activity.class);
+
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUID = mAuth.getUid();
+
         final Intent i = new Intent(CalendarActivity.this,AddPersonalEvent.class);
         final ArrayList<Event> list = new ArrayList<Event>();
         box = new EventBox();
         getEvents();
         adapter = new AdapterEvent(CalendarActivity.this, R.layout.listevent,list);
         final ListView  listView =  (ListView)findViewById(R.id.listView1);
+
+        // When user choose a day from the calendar;
         myCalender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth)
             {
+                // It empties the adapter and the list,
                 if(!adapter.isEmpty())
                     adapter.clear();
                 if(!list.isEmpty())
@@ -67,10 +75,13 @@ public class CalendarActivity extends AppCompatActivity{
                 i.putExtra("day",dayOfMonth);
                 i.putExtra("month",month);
                 i.putExtra("year",year);
+
+                // Checks which events are up today,
                 for(int i = 0 ; i < box.getSize() ; i++){
                     Event checker = box.getEvent(i);
                     Date eventDay = checker.getDayOfEvent();
                     if(eventDay.getDay()==dayOfMonth && eventDay.getMonth()==(month+1) && eventDay.getYear()==year) {
+                        // And adds them to the list.
                         list.add(checker);
                     }
                 }
@@ -81,6 +92,7 @@ public class CalendarActivity extends AppCompatActivity{
             }
         });
 
+        // This is to make user be able to create his own events.
         mybutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,10 +119,8 @@ public class CalendarActivity extends AppCompatActivity{
         });
     }
 
-
+    // Taking the events from database. First it takes the personal events, and then the club ones.
     public void getEvents(){
-        mAuth = FirebaseAuth.getInstance();
-        String currentUID = mAuth.getUid();
 
         final DatabaseReference getter = FirebaseDatabase.getInstance().getReference().child("Users").child("Person").child(currentUID).child("PersonalEvents");
         getter.addChildEventListener(new ChildEventListener() {
@@ -128,6 +138,7 @@ public class CalendarActivity extends AppCompatActivity{
                     String year = (String)datas.get("Year");
                     String startTime = (String)datas.get("Start Time");
                     String endTime = (String)datas.get("End Time");
+
 
                     if(isPast(day,month,year) == false){
                         DatabaseReference r = dataSnapshot.getRef();
@@ -186,7 +197,6 @@ public class CalendarActivity extends AppCompatActivity{
                                     HashMap<String, Object> datas = (HashMap<String, Object>) snapshot.getValue();
                                     if (datas == null)
                                         return;
-                                    //System.out.println(snapshot.toString());
                                     String start = (String) datas.get("Start Time");
                                     String end = (String) datas.get("End Time");
                                     String day = (String) datas.get("Day");
@@ -238,6 +248,8 @@ public class CalendarActivity extends AppCompatActivity{
         });
     }
 
+    // This method is to check whether a date has passed.
+    // Author: Hasan.
     private boolean isPast(String day, String month, String year) {
         int iDay = Integer.parseInt(day);
         int iMonth = Integer.parseInt(month);

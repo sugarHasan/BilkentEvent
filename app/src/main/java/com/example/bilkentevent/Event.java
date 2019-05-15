@@ -7,7 +7,7 @@ package com.example.bilkentevent;
 
 import java.io.Serializable;
 
-public class Event{
+public class Event implements Comparable<Event>{
 
     protected Date dayOfEvent;
     protected String startTime;
@@ -73,6 +73,11 @@ public class Event{
 
     public void setTopic(String topic) {
         this.topic = topic;
+    }
+
+    @Override
+    public int compareTo(Event e) {
+        return getDayOfEvent().toInt() - e.getDayOfEvent().toInt();
     }
 
 

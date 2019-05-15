@@ -5,6 +5,8 @@ Created by Hasan Yildirim
  */
 package com.example.bilkentevent;
 
+import androidx.annotation.NonNull;
+
 public class Date {
     //constants
 
@@ -48,6 +50,14 @@ public class Date {
         this.year = year;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        String[] months = {"Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
+        return day + " " + months[month - 1] + " " + year;
+    }
 
-
+    public int toInt() {
+        return (1000000 * day + 10000 * month + year);
+    }
 }
