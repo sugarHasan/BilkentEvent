@@ -61,7 +61,12 @@ public class AllEventsActivity extends AppCompatActivity {
 
         // Taking the events from database and sorting them.
         getEvents();
-        Collections.sort(list);
+        Collections.sort(list, new Comparator<Event>() {
+            @Override
+            public int compare(Event e1, Event e2) {
+                return e1.getDayOfEvent().toInt() - e2.getDayOfEvent().toInt();
+            }
+        });
         b = true;
 
         // We need an adapter to take all these events and hold.
@@ -103,7 +108,12 @@ public class AllEventsActivity extends AppCompatActivity {
         // This action listener changes the sorting criteria.
         bSortDate.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view)  {
-                Collections.sort(list);
+                Collections.sort(list, new Comparator<Event>() {
+                    @Override
+                    public int compare(Event e1, Event e2) {
+                        return e1.getDayOfEvent().toInt() - e2.getDayOfEvent().toInt();
+                    }
+                });
                 adapter.notifyDataSetChanged();
             }
         });
@@ -173,7 +183,12 @@ public class AllEventsActivity extends AppCompatActivity {
                     Date date = new Date(dayOfEvent,monthOfEvent,yearOfEvent);
                     PersonalEvent pers = new PersonalEvent(date,startTime,endTime,topic);
                     list.add(pers);
-                    Collections.sort(list);
+                    Collections.sort(list, new Comparator<Event>() {
+                        @Override
+                        public int compare(Event e1, Event e2) {
+                            return e1.getDayOfEvent().toInt() - e2.getDayOfEvent().toInt();
+                        }
+                    });
                     adapter.notifyDataSetChanged();
                 }
 
@@ -240,7 +255,12 @@ public class AllEventsActivity extends AppCompatActivity {
                                     // A club event will be created & added to our list.
                                     ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), start, end, topic, clubID, eventID, location,(int) snapshot.child("Connections").child("Attend").getChildrenCount());
                                     list.add(temp);
-                                    Collections.sort(list);
+                                    Collections.sort(list, new Comparator<Event>() {
+                                        @Override
+                                        public int compare(Event e1, Event e2) {
+                                            return e1.getDayOfEvent().toInt() - e2.getDayOfEvent().toInt();
+                                        }
+                                    });
                                     adapter.notifyDataSetChanged();
                                 }
 
@@ -313,7 +333,12 @@ public class AllEventsActivity extends AppCompatActivity {
                                     // A club event will be created & added to our list.
                                     ClubEvent temp = new ClubEvent(new Date(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)), start, end, topic, clubID, eventID, location,(int) snapshot.child("Connections").child("Attend").getChildrenCount());
                                     list.add(temp);
-                                    Collections.sort(list);
+                                    Collections.sort(list, new Comparator<Event>() {
+                                        @Override
+                                        public int compare(Event e1, Event e2) {
+                                            return e1.getDayOfEvent().toInt() - e2.getDayOfEvent().toInt();
+                                        }
+                                    });
                                     adapter.notifyDataSetChanged();
                                 }
 

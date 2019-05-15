@@ -8,7 +8,7 @@ package com.example.bilkentevent;
 
 import java.io.Serializable;
 
-public class ClubEvent extends Event{
+public class ClubEvent extends Event implements Comparable<Event> {
     //constants
 
     //variables
@@ -58,5 +58,11 @@ public class ClubEvent extends Event{
 
     public void setPopularity(int popularity) {
         this.popularity = popularity;
+    }
+
+    @Override
+    public int compareTo(Event o) {
+        ClubEvent f = (ClubEvent) o;
+        return f.popularity - this.popularity ;
     }
 }
