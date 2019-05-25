@@ -15,3 +15,6 @@ Patch ikiyi paylastim. Uygulama artik calisiyor sadece cirkin ufak hatalar var. 
 --Patch 3 Code Upload 1--
 
 Patch ucte genel olarak calismasi da takvimin duzeltildi.
+
+# Designer
+Hasan Yildirim
